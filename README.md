@@ -1,4 +1,4 @@
-A gem from processing credit cards with VirtualMerchant's API.
+A gem for processing credit cards with VirtualMerchant's API.
 
 
 ```ruby
