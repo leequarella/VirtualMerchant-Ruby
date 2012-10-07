@@ -28,4 +28,27 @@ A gem from processing credit cards with VirtualMerchant's API.
     response = VirtualMerchant.charge(cc, amount, creds)
 ```
 
+The response returned is a VMResponse object.
 
+If the transaction was sucessful and the card was approved, the response will have the following attrs:
+
+    * result_type = "approval"
+    * result_message: ssl_result_message
+    * result: ssl_result
+    * approval_code: ssl_approval_code
+    * blurred_card_number: ssl_card_number
+    * exp_date: ssl_exp_date
+    * cvv2_response: ssl_cvv2_response
+    * transaction_id: ssl_txn_id
+    * transaction_time: ssl_txn_tim
+
+
+Otherwise there was some problem with the transaction, so the response will have these attrs:
+
+    * result_type: "error"
+    * error: errorCode
+    * result_message: errorMessage
+
+
+For more information on the Virtual Merchant API, view their docs at
+https://www.myvirtualmerchant.com/VirtualMerchant/supportlandingvisitor.do

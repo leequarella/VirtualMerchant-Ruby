@@ -4,6 +4,7 @@ class VirtualMerchant
   require 'virtual_merchant/amount'
   require 'virtual_merchant/credentials'
   require 'virtual_merchant/credit_card'
+  require 'virtual_merchant/response'
 
   def self.hi
     puts "Hello"
@@ -58,7 +59,7 @@ class VirtualMerchant
   def self.sendXMLtoVirtualMerchant(xml, creds)
     if creds.referer
       headers = {
-        'Referer' => creds.referer#"https://rms.lucidfrog.com"
+        'Referer' => creds.referer
       }
     end
     if creds.demo
@@ -81,22 +82,20 @@ class VirtualMerchant
     REXML::XPath.each(doc, "txn") do |xml|
       if xml.elements["errorCode"]
         #Something was wrong with the transaction so an errorCode and errorMessage were sent back
-        response = {
+        response = VMResponse.new(
           error: xml.elements["errorCode"].text,
-          result_message: xml.elements["errorMessage"].text
-        }
+          result_message: xml.elements["errorMessage"].text)
       else
         #a clean transaction has taken place
-        response = {
+        response = VMResponse.new(
           result_message: xml.elements["ssl_result_message"].text,
           result: xml.elements["ssl_result"].text,
-          cardNumBlurred: xml.elements["ssl_card_number"].text,
+          blurred_card_number: xml.elements["ssl_card_number"].text,
           exp_date: xml.elements["ssl_exp_date"].text,
           approval_code: xml.elements["ssl_approval_code"].text,
           cvv2_response: xml.elements["ssl_cvv2_response"].text,
           transaction_id: xml.elements["ssl_txn_id"].text,
-          transaction_time: xml.elements["ssl_txn_time"].text
-        }
+          transaction_time: xml.elements["ssl_txn_time"].text)
       end
     end
     response
@@ -104,14 +103,12 @@ class VirtualMerchant
 
   def self.printResponse(response)
     p "!!!!!!!!!!!!!!!!!!!!!!!! Credit Response !!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-    if response[:result]
-      p "ssl_result " + response[:result]
-      p "ssl_result_message " + response[:result_message]
-      p "ssl_transaction_time " + response[:transaction_time]
-    elsif response[:error]
-      p "error " + response[:error] 
-      p "error_message " + response[:error_message] if response[:error_message]
+    if response.result
+      p "result " + response.result
+    elsif response.error
+      p "error " + response.error
     end
+    p "result_message " + response.result_message
     p "!!!!!!!!!!!!!!!!!!!!!!!! End Credit Response !!!!!!!!!!!!!!!!!!!!!!!!!!!!"
   end
 end
