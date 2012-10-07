@@ -4,7 +4,7 @@ class VMCredentials
     @account_id = info[:account_id].to_s
     @user_id = info[:user_id].to_s
     @pin = info[:pin].to_s
-    @referer = info[:referer.to_s] || false
+    @referer = info[:referer].to_s
     @demo = info[:demo] || false
   end
 end
