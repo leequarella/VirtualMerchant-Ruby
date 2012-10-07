@@ -10,5 +10,5 @@ Gem::Specification.new do |s|
                    "lib/virtual_merchant/amount.rb",
                    "lib/virtual_merchant/credentials.rb",
                    "lib/virtual_merchant/credit_card.rb"]
-  s.homepage    = 'http://rubygems.org/gems/virtual_merchant_ruby'
+  s.homepage    = 'https://github.com/leequarella/VirtualMerchant-Ruby'
 end
