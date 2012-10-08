@@ -1,5 +1,15 @@
 A gem for processing credit cards with VirtualMerchant's API.
 
+## Setup
+
+Add it to your Gemfile then run `bundle` to install it.
+
+```ruby
+gem "virtual_merchant"
+```
+
+
+## Usage
 
 ```ruby
     #Create CreditCard via manual entry
