@@ -6,10 +6,6 @@ class VirtualMerchant
   require 'virtual_merchant/credit_card'
   require 'virtual_merchant/response'
 
-  def self.hi
-    puts "Hello"
-  end
-  
   def self.charge(card, amount, creds)
     xml = self.generateXMLforVirtualMerchant(card, amount, creds)
     vm_response = self.sendXMLtoVirtualMerchant(xml, creds)
