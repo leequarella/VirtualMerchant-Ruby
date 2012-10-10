@@ -11,6 +11,7 @@ class VMCreditCard
       @number = info[:number].to_s.gsub(/\s+/, "") if info[:number]
       @expiration = info[:expiration].to_s if info[:expiration]
       @security_code = info[:security_code].to_s if info[:security_code]
+      @track2 = info[:track_2] if info[:track_2]
     end
   end
 
