@@ -1,8 +1,8 @@
 require 'virtual_merchant/credit_card'
 
-describe CreditCard, "#amount" do
+describe VMCreditCard, "#amount" do
   it "initiallizes" do
-    cc = CreditCard.new(
+    cc = VMCreditCard.new(
       name_on_card: "Lee Quarella",
       number: "1234567890123456",
       expiration: "0513",

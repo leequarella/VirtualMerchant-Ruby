@@ -1,4 +1,4 @@
-class CreditCard
+class VMCreditCard
   attr_accessor :name_on_card, :number, :expiration, :security_code, :last_four, 
     :swipe, :track2
 

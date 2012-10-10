@@ -7,7 +7,7 @@ describe VirtualMerchant, "#amount" do
       user_id: 222,
       pin: "abc",
       referer: "https://thisisauri.com")
-    cc = CreditCard.new(
+    cc = VMCreditCard.new(
       name_on_card: "Lee Quarella",
       number: "1234567890123456",
       expiration: "0513",
