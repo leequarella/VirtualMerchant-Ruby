@@ -69,7 +69,7 @@ class VMCreditCard
   end
 
  def blurred_number
-    number = self.card_number.to_s
+    number = self.number.to_s
     leng = number.length
     n = number[0..1]
     (leng-6).times {n+= "*"}

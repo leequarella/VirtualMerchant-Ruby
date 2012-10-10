@@ -24,4 +24,16 @@ describe VMCreditCard, "#amount" do
     cc.track2.should eq(";5555555555555555=555555555555555?")
   end
 
+  it "can blur the card number" do
+    cc = VMCreditCard.new(
+      name_on_card: "Lee Quarella",
+      number: "1234567890123456",
+      expiration: "0513",
+      track_2: ";5555555555555555=555555555555555?",
+      security_code: "1234")
+    cc.blurred_number.should eq("12**********3456")
+    cc.number.should eq("1234567890123456")
+
+  end
+
 end
