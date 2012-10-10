@@ -15,25 +15,25 @@ class VMCreditCard
   end
 
   def from_swipe(swipe)
-    self.track2 = self.extract_track_2(swipe)
-    self.card_number = self.extract_card_number(swipe)
-    self.expiration = self.extract_expiration(swipe)
-    self.name_on_card = self.extract_name(swipe)
+    self.track2 = extract_track_2(swipe)
+    self.number = extract_card_number(swipe)
+    self.expiration = extract_expiration(swipe)
+    self.name_on_card = extract_name(swipe)
   end
 
-  def self.extract_card_number(swipe)
+  def extract_card_number(swipe)
     card_number = swipe[2.. swipe.index('^')-1]
     card_number = card_number.split(' ').join('')
   end
 
-  def self.extract_expiration(swipe)
+  def extract_expiration(swipe)
     secondCarrot = swipe.index("^", swipe.index("^")+1)
     card_expiration_year = swipe[secondCarrot+1..secondCarrot+2]
     card_expiration_month = swipe[(secondCarrot + 3)..(secondCarrot + 4)]
     card_expiration = card_expiration_month.to_s + card_expiration_year.to_s
   end
 
-  def self.extract_name(swipe)
+  def extract_name(swipe)
     secondCarrot = swipe.index("^", swipe.index("^")+1)
     if swipe.index('/')
       first_name_on_card = swipe[swipe.index('/')+1..secondCarrot-1]
@@ -50,7 +50,7 @@ class VMCreditCard
     name_on_card = first_name_on_card + " " + last_name_on_card
   end
 
-  def self.extract_track_2(swipe)
+  def extract_track_2(swipe)
     # Magtek reader:  Track 2 starts with a semi-colon and goes to the end
     # I think that is standard for all readers, but not positive. -LQ
     track2 = swipe.slice(swipe.index(";"), swipe.length)

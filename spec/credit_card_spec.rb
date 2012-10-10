@@ -12,4 +12,13 @@ describe VMCreditCard, "#amount" do
     cc.expiration.should eq("0513")
     cc.security_code.should eq("1234")
   end
+
+  it "initiallizes from a swipe" do
+    cc = VMCreditCard.new(
+      swipe: "%B5555555555555555^CARDHOLDER/LEE F^5555555555555555555555555555555?;5555555555555555=555555555555555?")
+    cc.name_on_card.should eq("LEE F CARDHOLDER")
+    cc.number.should eq("5555555555555555")
+    cc.expiration.should eq("5555")
+  end
+
 end
