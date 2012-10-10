@@ -16,5 +16,6 @@ describe VirtualMerchant, "#amount" do
 
     response = VirtualMerchant.charge(cc, amount, creds)
     response.should be_an_instance_of VMResponse
+    response.approved.should be_false
   end
 end
