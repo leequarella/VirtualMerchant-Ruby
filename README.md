@@ -42,7 +42,7 @@ The response returned is a VMResponse object.
 
 If the transaction was sucessful and the card was approved, the response will have the following attrs:
 
-    * result_type = "approval"
+    * result_type: "approval"
     * result_message: ssl_result_message
     * result: ssl_result
     * approval_code: ssl_approval_code
@@ -51,6 +51,7 @@ If the transaction was sucessful and the card was approved, the response will ha
     * cvv2_response: ssl_cvv2_response
     * transaction_id: ssl_txn_id
     * transaction_time: ssl_txn_tim
+    * approved: true
 
 
 Otherwise there was some problem with the transaction, so the response will have these attrs:
@@ -58,6 +59,7 @@ Otherwise there was some problem with the transaction, so the response will have
     * result_type: "error"
     * error: errorCode
     * result_message: errorMessage
+    * approved: false
 
 
 For more information on the Virtual Merchant API, view their docs at
