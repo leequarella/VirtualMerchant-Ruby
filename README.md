@@ -13,7 +13,7 @@ gem "virtual_merchant"
 
 ```ruby
     #Create CreditCard via manual entry
-    cc = CreditCard.new(
+    cc = VMCreditCard.new(
       name_on_card: <name_on_card>,
       number: <card_number>,
       expiration: <card_exp>,
@@ -21,7 +21,7 @@ gem "virtual_merchant"
 
     # OR
     # via MSR
-    cc = CreditCard.new(
+    cc = VMCreditCard.new(
       swipe: <swipe_data>)
 
     amount = VMAmount.new(
