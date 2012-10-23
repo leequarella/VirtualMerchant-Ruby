@@ -7,27 +7,27 @@ class VirtualMerchant
   require 'virtual_merchant/response'
 
   def self.charge(card, amount, creds)
-    xml = self.generateXMLforVirtualMerchant(card, amount, creds)
+    xml = self.generateXMLforVirtualMerchant(card, amount, creds, "ccsale")
     vm_response = self.sendXMLtoVirtualMerchant(xml, creds)
     response = self.generateResponse(vm_response)
     self.printResponse(response)
     response
   end
 
-  def self.generateXMLforVirtualMerchant(card, amount, creds)
-    if amount.total.to_f > 0
-      #if the amount to be processed is a positive number, this is a sale
-      transactionType = 'ccsale'
-    else
-      #if the amount to be processed is a negative number, this is a return
-      transactionType = 'cccredit'
-    end
+  def self.refund(card, amount, creds)
+    xml = self.generateXMLforVirtualMerchant(card, amount, creds, 'cccredit')
+    vm_response = self.sendXMLtoVirtualMerchant(xml, creds)
+    response = self.generateResponse(vm_response)
+    self.printResponse(response)
+    response
+  end
 
+  def self.generateXMLforVirtualMerchant(card, amount, creds, transaction_type)
     xml = "xmldata=<txn>
       <ssl_merchant_id>" + creds.account_id + "</ssl_merchant_id>
       <ssl_user_id>" + creds.user_id + "</ssl_user_id>
       <ssl_pin>" + creds.pin + "</ssl_pin>
-      <ssl_transaction_type>" + transactionType + "</ssl_transaction_type>
+      <ssl_transaction_type>" + transaction_type + "</ssl_transaction_type>
       <ssl_amount>" + amount.total + "</ssl_amount>
       <ssl_salestax>" + amount.tax + "</ssl_salestax>
       <ssl_customer_code>" + card.last_four + "</ssl_customer_code>
