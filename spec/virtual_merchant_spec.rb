@@ -42,4 +42,10 @@ describe VirtualMerchant, "#amount" do
     response = VirtualMerchant.refund(valid_cc, amount, valid_creds)
     response.should be_an_instance_of VMResponse
   end
+
+  it "voids a transaction" do
+    response = VirtualMerchant.charge(invalid_cc, amount, invalid_creds)
+    response = VirtualMerchant.void(response.transaction_id, valid_creds)
+    response.should be_an_instance_of VMResponse
+  end
 end

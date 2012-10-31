@@ -22,6 +22,25 @@ class VirtualMerchant
     response
   end
 
+  def self.void(transaction_id, creds)
+    xml = self.generateVoidXML(transaction_id, creds)
+    vm_response = self.sendXMLtoVirtualMerchant(xml, creds)
+    response = self.generateResponse(vm_response)
+    self.printResponse(response)
+    response
+  end
+
+  def self.generateVoidXML(transaction_id, creds)
+    xml = "xmldata=<txn>
+      <ssl_merchant_id>#{creds.account_id}</ssl_merchant_id>
+      <ssl_user_id>#{creds.user_id}</ssl_user_id>
+      <ssl_pin>#{creds.pin}</ssl_pin>
+      <ssl_transaction_type>ccvoid</ssl_transaction_type>
+      <ssl_txn_id>#{transaction_id}</ssl_txn_id>
+      </txn>"
+    return xml
+  end
+
   def self.generateXMLforVirtualMerchant(card, amount, creds, transaction_type)
     xml = "xmldata=<txn>
       <ssl_merchant_id>" + creds.account_id + "</ssl_merchant_id>
