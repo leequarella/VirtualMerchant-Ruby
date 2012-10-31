@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'virtual_merchant'
-  s.version     = '0.0.8'
-  s.date        = '2012-10-07'
+  s.version     = '0.0.10'
+  s.date        = '2012-10-31'
   s.summary     = "Virtual Merchant API"
   s.description = "Makes it easy to charge credit cards with the VirtualMerchant API."
   s.authors     = ["Lee Quarella"]
