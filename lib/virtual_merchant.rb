@@ -113,9 +113,6 @@ module VirtualMerchant
           transaction_time: xml.elements["ssl_txn_time"].text)
       end
     end
-    puts "<<<<<<<<<<<<<<<<<<<<<<"
-    puts response
-    puts "<<<<<<<<<<<<<<<<<<<<<<"
     response
   end
 
