@@ -1,4 +1,4 @@
-class VirtualMerchant
+module VirtualMerchant
   require "rexml/document"
   require 'net/http'
   require 'virtual_merchant/amount'
@@ -97,12 +97,12 @@ class VirtualMerchant
     REXML::XPath.each(doc, "txn") do |xml|
       if xml.elements["errorCode"]
         #Something was wrong with the transaction so an errorCode and errorMessage were sent back
-        response = VMResponse.new(
+        response = VirtualMerchant::Response.new(
           error: xml.elements["errorCode"].text,
           result_message: xml.elements["errorMessage"].text)
       else
         #a clean transaction has taken place
-        response = VMResponse.new(
+        response = VirtualMerchant::Response.new(
           result_message: xml.elements["ssl_result_message"].text,
           result: xml.elements["ssl_result"].text,
           blurred_card_number: xml.elements["ssl_card_number"].text,
@@ -113,6 +113,9 @@ class VirtualMerchant
           transaction_time: xml.elements["ssl_txn_time"].text)
       end
     end
+    puts "<<<<<<<<<<<<<<<<<<<<<<"
+    puts response
+    puts "<<<<<<<<<<<<<<<<<<<<<<"
     response
   end
 

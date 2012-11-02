@@ -1,8 +1,8 @@
 require 'virtual_merchant/credit_card'
 
-describe VMCreditCard, "#amount" do
+describe VirtualMerchant::CreditCard, "#amount" do
   it "initiallizes" do
-    cc = VMCreditCard.new(
+    cc = VirtualMerchant::CreditCard.new(
       name_on_card: "Lee Quarella",
       number: "1234567890123456",
       expiration: "0513",
@@ -16,7 +16,7 @@ describe VMCreditCard, "#amount" do
   end
 
   it "initiallizes from a swipe" do
-    cc = VMCreditCard.new(
+    cc = VirtualMerchant::CreditCard.new(
       swipe: "%B5555555555555555^CARDHOLDER/LEE F^5555555555555555555555555555555?;5555555555555555=555555555555555?")
     cc.name_on_card.should eq("LEE F CARDHOLDER")
     cc.number.should eq("5555555555555555")
@@ -25,7 +25,7 @@ describe VMCreditCard, "#amount" do
   end
 
   it "can blur the card number" do
-    cc = VMCreditCard.new(
+    cc = VirtualMerchant::CreditCard.new(
       name_on_card: "Lee Quarella",
       number: "1234567890123456",
       expiration: "0513",

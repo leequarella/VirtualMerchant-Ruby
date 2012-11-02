@@ -1,8 +1,8 @@
 require 'virtual_merchant/credentials'
 
-describe VMCredentials, "#amount" do
+describe VirtualMerchant::Credentials, "#amount" do
   it "initiallizes" do
-    creds = VMCredentials.new(
+    creds = VirtualMerchant::Credentials.new(
       account_id: 111,
       user_id: 222,
       pin: "abc",
