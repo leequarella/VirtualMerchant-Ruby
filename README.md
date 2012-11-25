@@ -21,7 +21,7 @@ gem "virtual_merchant"
 
     # OR
     # via MSR
-    cc = VMCreditCard.new(
+    cc = VirtualMerchant::CreditCard.new(
       swipe: <swipe_data>)
 
     amount = VirtualMerchant::Amount.new(
