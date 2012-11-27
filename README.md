@@ -29,7 +29,7 @@ gem "virtual_merchant"
       tax: <amount of tax included in the total, optional>)
 
     creds = VirtualMerchant::Credentials.new(
-      merchant_id: <vm_account_id>,
+      account_id: <vm_account_id>,
       user_id: <vm_user_id>,
       pin: <vm_user_pass>,
       demo: <boolean, optional>,
