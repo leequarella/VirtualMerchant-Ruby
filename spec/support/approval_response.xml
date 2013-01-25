@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<txn>
+  <ssl_approval_code>      </ssl_approval_code>
+  <ssl_email></ssl_email>
+  <ssl_cvv2_response></ssl_cvv2_response>
+  <ssl_last_name></ssl_last_name>
+  <ssl_exp_date>0513</ssl_exp_date>
+  <ssl_account_balance>0.00</ssl_account_balance>
+  <ssl_result_message>APPROVAL</ssl_result_message>
+  <ssl_invoice_number></ssl_invoice_number>
+  <ssl_first_name></ssl_first_name>
+  <ssl_amount>10.99</ssl_amount>
+  <ssl_result>0</ssl_result>
+  <ssl_txn_id>AA49315-6E6EB901-763A-4D7B-9671-B33DDEBEF52D</ssl_txn_id>
+  <ssl_card_number>50**********3003</ssl_card_number>
+  <ssl_txn_time>01/25/2013 11:15:47 AM</ssl_txn_time>
+  <ssl_avs_response> </ssl_avs_response>
+</txn>

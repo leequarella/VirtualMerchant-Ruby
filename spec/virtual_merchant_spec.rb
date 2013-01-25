@@ -2,9 +2,9 @@ require 'virtual_merchant'
 
 ##Useful vars ################################################################
   valid_creds = VirtualMerchant::Credentials.new(
-    account_id: "000046",
-    user_id: "000046",
-    pin: "4X9PXL",
+    account_id: "000309",
+    user_id: "000309",
+    pin: "ZNXBPG",
     referer: "https://thisisauri.com",
     demo: true)
   
@@ -21,6 +21,11 @@ require 'virtual_merchant'
     number: "5000300020003003",
     expiration: "0513",
     security_code: "1234")
+  valid_cc = VirtualMerchant::CreditCard.new(
+    name_on_card: "Lee M Cardholder",
+    number: "4489870000021509",
+    expiration: "1215",
+    security_code: "757")
     
   invalid_cc = VirtualMerchant::CreditCard.new(
     name_on_card: "Lee M Cardholder",
@@ -28,14 +33,44 @@ require 'virtual_merchant'
     expiration: "0513",
     security_code: "1234")
   
-  amount = VirtualMerchant::Amount.new(total: 10.99)
+  amount = VirtualMerchant::Amount.new(total: 0.01)
 ##Useful vars ################################################################
 
 describe VirtualMerchant, "#amount" do
-  it "receives a response from VM" do
+  it "Talks to Virtual Merchant" do
     response = VirtualMerchant.charge(invalid_cc, amount, invalid_creds)
     response.should be_an_instance_of VirtualMerchant::Response
     response.approved.should be_false
+  end
+
+  describe "Charging a card" do
+    context "Happy Approval" do
+      it "generates an approval response" do
+        approval_xml = File.read("spec/support/approval_response.xml")
+        VirtualMerchant.stub!(:sendXMLtoVirtualMerchant).and_return(approval_xml)
+        response = VirtualMerchant.charge(valid_cc, amount, valid_creds)
+        response.should be_an_instance_of VirtualMerchant::Response
+        response.approved.should be_true
+      end
+    end
+    context "Un-Happy Approval" do
+      it "generates an error response" do
+        approval_xml = File.read("spec/support/bad_approval_response.xml")
+        VirtualMerchant.stub!(:sendXMLtoVirtualMerchant).and_return(approval_xml)
+        response = VirtualMerchant.charge(valid_cc, amount, valid_creds)
+        response.should be_an_instance_of VirtualMerchant::Response
+        response.approved.should be_false
+      end
+    end
+    context "Straight error response" do
+      it "generates an error response" do
+        error_xml = File.read("spec/support/error_response.xml")
+        VirtualMerchant.stub!(:sendXMLtoVirtualMerchant).and_return(error_xml)
+        response = VirtualMerchant.charge(invalid_cc, amount, valid_creds)
+        response.should be_an_instance_of VirtualMerchant::Response
+        response.approved.should be_false
+      end
+    end
   end
 
   it "refunds a card" do

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<txn>
+  <ssl_approval_code>      </ssl_approval_code>
+  <ssl_email></ssl_email>
+  <ssl_cvv2_response>M</ssl_cvv2_response>
+  <ssl_last_name></ssl_last_name>
+  <ssl_exp_date>1215</ssl_exp_date>
+  <ssl_account_balance>0.01</ssl_account_balance>
+  <ssl_result_message>CALL AUTH CENTER</ssl_result_message>
+  <ssl_invoice_number></ssl_invoice_number>
+  <ssl_first_name></ssl_first_name>
+  <ssl_amount>0.01</ssl_amount>
+  <ssl_result>1</ssl_result>
+  <ssl_txn_id>AA49315-08A8C856-C986-46D5-8FC8-0B12EAB062CB</ssl_txn_id>
+  <ssl_card_number>44**********1509</ssl_card_number>
+  <ssl_txn_time>01/25/2013 11:44:24 AM</ssl_txn_time>
+  <ssl_avs_response> </ssl_avs_response>
+</txn>
+
