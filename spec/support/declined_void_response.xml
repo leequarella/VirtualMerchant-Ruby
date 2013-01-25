@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<txn>
+  <errorCode>5040</errorCode>
+  <errorName>Invalid Transaction ID</errorName>
+  <errorMessage>The transaction ID is invalid for this transaction type</errorMessage>
+</txn>
+
