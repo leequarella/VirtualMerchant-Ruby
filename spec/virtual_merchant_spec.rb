@@ -21,11 +21,6 @@ require 'virtual_merchant'
     number: "5000300020003003",
     expiration: "0513",
     security_code: "1234")
-  valid_cc = VirtualMerchant::CreditCard.new(
-    name_on_card: "Lee M Cardholder",
-    number: "4489870000021509",
-    expiration: "1215",
-    security_code: "757")
     
   invalid_cc = VirtualMerchant::CreditCard.new(
     name_on_card: "Lee M Cardholder",
