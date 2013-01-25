@@ -13,7 +13,7 @@ gem "virtual_merchant"
 
 ```ruby
     #Create CreditCard via manual entry
-    cc = VMCreditCard.new(
+    cc = VirtualMerchant::CreditCard.new(
       name_on_card: <name_on_card>,
       number: <card_number>,
       expiration: <card_exp>,
@@ -21,15 +21,15 @@ gem "virtual_merchant"
 
     # OR
     # via MSR
-    cc = VMCreditCard.new(
+    cc = VirtualMerchant::CreditCard.new(
       swipe: <swipe_data>)
 
-    amount = VMAmount.new(
+    amount = VirtualMerchant::Amount.new(
       total: <total amount to charge>,
       tax: <amount of tax included in the total, optional>)
 
-    creds = VMCredentials.new(
-      merchant_id: <vm_account_id>,
+    creds = VirtualMerchant::Credentials.new(
+      account_id: <vm_account_id>,
       user_id: <vm_user_id>,
       pin: <vm_user_pass>,
       demo: <boolean, optional>,
@@ -38,7 +38,7 @@ gem "virtual_merchant"
     response = VirtualMerchant.charge(cc, amount, creds)
 ```
 
-The response returned is a VMResponse object.
+The response returned is a VirtualMerchant::Response object.
 
 If the transaction was sucessful and the card was approved, the response will have the following attrs:
 
