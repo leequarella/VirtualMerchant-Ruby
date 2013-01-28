@@ -33,7 +33,5 @@ describe VirtualMerchant::CreditCard, "#amount" do
       security_code: "1234")
     cc.blurred_number.should eq("12**********3456")
     cc.number.should eq("1234567890123456")
-
   end
-
 end
