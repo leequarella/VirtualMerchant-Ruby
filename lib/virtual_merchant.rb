@@ -10,26 +10,21 @@ module VirtualMerchant
 
   def self.charge(card, amount, creds)
     xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, "ccsale")
-    communication = VirtualMerchant::Communication.new(
-      {xml: xml, url: self.url(creds.demo), referer: creds.referer})
-    vm_response = communication.send
-    response = self.generateResponse(vm_response)
-    VirtualMerchant::Logger.new(response)
-    response
+    self.process(xml, creds, amount)
   end
 
   def self.refund(card, amount, creds)
     xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, 'cccredit')
-    communication = VirtualMerchant::Communication.new(
-      {xml: xml, url: self.url(creds.demo), referer: creds.referer})
-    vm_response = communication.send
-    response = self.generateResponse(vm_response)
-    VirtualMerchant::Logger.new(response)
-    response
+    self.process(xml, creds, amount)
   end
 
   def self.void(transaction_id, creds)
     xml = VirtualMerchant::XMLGenerator.generateVoid(transaction_id, creds)
+    self.process(xml, creds)
+  end
+
+  private
+  def self.process(xml, creds, amount=0)
     communication = VirtualMerchant::Communication.new(
       {xml: xml, url: self.url(creds.demo), referer: creds.referer})
     vm_response = communication.send
@@ -38,7 +33,6 @@ module VirtualMerchant
     response
   end
 
-  private
   def self.url(demo)
     if demo
       'https://demo.myvirtualmerchant.com/VirtualMerchantDemo/processxml.do'

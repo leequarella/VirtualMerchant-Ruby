@@ -51,7 +51,6 @@ describe VirtualMerchant do
     response.approved.should be_false
   end
 
-
   describe "Charging a card" do
     context "Happy Approval" do
       it "generates an approval response" do
