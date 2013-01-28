@@ -1,0 +1,15 @@
+xmldata=<txn>
+<ssl_merchant_id>111</ssl_merchant_id>
+<ssl_user_id>222</ssl_user_id>
+<ssl_pin>abc</ssl_pin>
+<ssl_transaction_type>ccsale</ssl_transaction_type>
+<ssl_amount>0.01</ssl_amount>
+<ssl_salestax>0.00</ssl_salestax>
+<ssl_customer_code>3456</ssl_customer_code>
+<ssl_card_present>Y</ssl_card_present>
+<ssl_partial_auth_indicator>0</ssl_partial_auth_indicator>
+<ssl_card_number>1234567890123456</ssl_card_number>
+<ssl_exp_date>0513</ssl_exp_date>
+<ssl_cvv2cvc2_indicator>1</ssl_cvv2cvc2_indicator>
+<ssl_cvv2cvc2>1234</ssl_cvv2cvc2>
+</txn>
