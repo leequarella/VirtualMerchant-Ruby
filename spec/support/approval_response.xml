@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <txn>
-  <ssl_approval_code>      </ssl_approval_code>
+  <ssl_approval_code>4444</ssl_approval_code>
   <ssl_email></ssl_email>
   <ssl_cvv2_response></ssl_cvv2_response>
   <ssl_last_name></ssl_last_name>

@@ -2,9 +2,6 @@
 <txn>
   <errorCode>5000</errorCode>
   <errorName>Credit Card Number Invalid</errorName>
-  <errorMessage>
-    The Credit Card Number supplied in the authorization 
-    request appears to be invalid.
-  </errorMessage>
+  <errorMessage>The Credit Card Number supplied in the authorization request appears to be invalid.</errorMessage>
 </txn>
 
