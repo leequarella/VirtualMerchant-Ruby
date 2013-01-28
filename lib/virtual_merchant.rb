@@ -1,7 +1,7 @@
 module VirtualMerchant
   require "rexml/document"
-  require 'net/http'
   require 'virtual_merchant/amount'
+  require 'virtual_merchant/communication'
   require 'virtual_merchant/credentials'
   require 'virtual_merchant/credit_card'
   require 'virtual_merchant/response'
@@ -10,7 +10,9 @@ module VirtualMerchant
 
   def self.charge(card, amount, creds)
     xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, "ccsale")
-    vm_response = self.sendXMLtoVirtualMerchant(xml, creds)
+    communication = VirtualMerchant::Communication.new(
+      {xml: xml, url: self.url(creds.demo), referer: creds.referer})
+    vm_response = communication.send
     response = self.generateResponse(vm_response)
     VirtualMerchant::Logger.new(response)
     response
@@ -18,7 +20,9 @@ module VirtualMerchant
 
   def self.refund(card, amount, creds)
     xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, 'cccredit')
-    vm_response = self.sendXMLtoVirtualMerchant(xml, creds)
+    communication = VirtualMerchant::Communication.new(
+      {xml: xml, url: self.url(creds.demo), referer: creds.referer})
+    vm_response = communication.send
     response = self.generateResponse(vm_response)
     VirtualMerchant::Logger.new(response)
     response
@@ -26,48 +30,43 @@ module VirtualMerchant
 
   def self.void(transaction_id, creds)
     xml = VirtualMerchant::XMLGenerator.generateVoid(transaction_id, creds)
-    vm_response = self.sendXMLtoVirtualMerchant(xml, creds)
+    communication = VirtualMerchant::Communication.new(
+      {xml: xml, url: self.url(creds.demo), referer: creds.referer})
+    vm_response = communication.send
     response = self.generateResponse(vm_response)
     VirtualMerchant::Logger.new(response)
     response
   end
 
   private
-  def self.sendXMLtoVirtualMerchant(xml, creds)
-    if creds.referer
-      headers = {
-        'Referer' => creds.referer
-      }
-    end
-    if creds.demo
-      uri=URI.parse('https://demo.myvirtualmerchant.com/VirtualMerchantDemo/processxml.do')
+  def self.url(demo)
+    if demo
+      'https://demo.myvirtualmerchant.com/VirtualMerchantDemo/processxml.do'
     else
-      uri=URI.parse('https://www.myvirtualmerchant.com/VirtualMerchant/processxml.do')
+      'https://www.myvirtualmerchant.com/VirtualMerchant/processxml.do'
     end
-
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    body = http.post(uri.request_uri, xml, headers).body
-    return body
   end
 
   def self.generateResponse(vm_response)
     #decode XML sent back by virtualMerchant
+    if vm_response == false
+      response =  
+       self.error_response("-1", "VirtualMerchant didn't respond.")
+      return response
+    end
+
     response = {}
     doc = REXML::Document.new(vm_response)
     REXML::XPath.each(doc, "txn") do |xml|
       if xml.elements["errorCode"] 
         #Something was wrong with the transaction so an 
         #errorCode and errorMessage were sent back
-        response = VirtualMerchant::Response.new(
-          error: xml.elements["errorCode"].text,
-          result_message: xml.elements["errorMessage"].text)
+        response = 
+          self.error_response(xml.elements["errorCode"].text, xml.elements["errorMessage"].text)
       elsif (xml.elements["ssl_result"] && xml.elements["ssl_result"].text != "0")
         #something closer to an approval, but still declined
-        response = VirtualMerchant::Response.new(
-          error: xml.elements["ssl_result_message"].text,
-          result_message: xml.elements["ssl_result"].text)
+        response = 
+          self.error_response(xml.elements["ssl_result_message"].text, xml.elements["ssl_result"].text)
       else
         #a clean transaction has taken place
         response = VirtualMerchant::Response.new(
@@ -82,5 +81,11 @@ module VirtualMerchant
       end
     end
     response
+  end
+
+  def self.error_response(code, message)
+    response = VirtualMerchant::Response.new(
+      error: code,
+      result_message: message)
   end
 end

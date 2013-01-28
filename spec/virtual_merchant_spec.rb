@@ -36,17 +36,27 @@ require 'virtual_merchant'
   declined_void_xml = File.read("spec/support/declined_void_response.xml")
 ##Useful vars ################################################################
 
-describe VirtualMerchant, "#amount" do
+describe VirtualMerchant do
   it "Talks to Virtual Merchant" do
     response = VirtualMerchant.charge(invalid_cc, amount, invalid_creds)
     response.should be_an_instance_of VirtualMerchant::Response
     response.approved.should be_false
   end
 
+  it "generates an error response if VM crapped out" do
+    VirtualMerchant::Communication.any_instance
+      .stub(:send).and_return(false)
+    response = VirtualMerchant.charge(valid_cc, amount, valid_creds)
+    response.should be_an_instance_of VirtualMerchant::Response
+    response.approved.should be_false
+  end
+
+
   describe "Charging a card" do
     context "Happy Approval" do
       it "generates an approval response" do
-        VirtualMerchant.stub!(:sendXMLtoVirtualMerchant).and_return(approval_xml)
+        VirtualMerchant::Communication.any_instance
+          .stub(:send).and_return(approval_xml)
         response = VirtualMerchant.charge(valid_cc, amount, valid_creds)
         response.should be_an_instance_of VirtualMerchant::Response
         response.approved.should be_true
@@ -54,7 +64,8 @@ describe VirtualMerchant, "#amount" do
     end
     context "Un-Happy Approval" do
       it "generates an error response" do
-        VirtualMerchant.stub!(:sendXMLtoVirtualMerchant).and_return(bad_approval_xml)
+        VirtualMerchant::Communication.any_instance
+          .stub(:send).and_return(bad_approval_xml)
         response = VirtualMerchant.charge(valid_cc, amount, valid_creds)
         response.should be_an_instance_of VirtualMerchant::Response
         response.approved.should be_false
@@ -62,7 +73,8 @@ describe VirtualMerchant, "#amount" do
     end
     context "Straight error response" do
       it "generates an error response" do
-        VirtualMerchant.stub!(:sendXMLtoVirtualMerchant).and_return(error_xml)
+        VirtualMerchant::Communication.any_instance
+          .stub(:send).and_return(error_xml)
         response = VirtualMerchant.charge(invalid_cc, amount, valid_creds)
         response.should be_an_instance_of VirtualMerchant::Response
         response.approved.should be_false
@@ -73,7 +85,8 @@ describe VirtualMerchant, "#amount" do
   describe "Refunding a card" do
     context "Happy Approval" do
       it "generates an approval response" do
-        VirtualMerchant.stub!(:sendXMLtoVirtualMerchant).and_return(approval_xml)
+        VirtualMerchant::Communication.any_instance
+          .stub(:send).and_return(approval_xml)
         response = VirtualMerchant.refund(valid_cc, amount, valid_creds)
         response.should be_an_instance_of VirtualMerchant::Response
         response.approved.should be_true
@@ -81,7 +94,8 @@ describe VirtualMerchant, "#amount" do
     end
     context "Un-Happy Approval" do
       it "generates an error response" do
-        VirtualMerchant.stub!(:sendXMLtoVirtualMerchant).and_return(bad_approval_xml)
+        VirtualMerchant::Communication.any_instance
+          .stub(:send).and_return(bad_approval_xml)
         response = VirtualMerchant.refund(valid_cc, amount, valid_creds)
         response.should be_an_instance_of VirtualMerchant::Response
         response.approved.should be_false
@@ -89,7 +103,8 @@ describe VirtualMerchant, "#amount" do
     end
     context "Straight error response" do
       it "generates an error response" do
-        VirtualMerchant.stub!(:sendXMLtoVirtualMerchant).and_return(error_xml)
+        VirtualMerchant::Communication.any_instance
+          .stub(:send).and_return(error_xml)
         response = VirtualMerchant.refund(invalid_cc, amount, valid_creds)
         response.should be_an_instance_of VirtualMerchant::Response
         response.approved.should be_false
@@ -108,8 +123,8 @@ describe VirtualMerchant, "#amount" do
     end
     context "failed void" do
       it "generates an error response" do
-        VirtualMerchant.stub!(:sendXMLtoVirtualMerchant)
-          .and_return(declined_void_xml)
+        VirtualMerchant::Communication.any_instance
+          .stub(:send).and_return(declined_void_xml)
         response = VirtualMerchant.void(123, valid_creds)
         response.should be_an_instance_of VirtualMerchant::Response
         response.approved.should be_false
