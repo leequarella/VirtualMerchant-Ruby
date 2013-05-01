@@ -14,14 +14,13 @@ module VirtualMerchant
     #xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, "ccsale")
   end
 
-  def self.refund(card, amount, creds)
-    xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, 'cccredit')
-    self.process(xml, creds, amount)
+  def self.refund(card, amount, creds, gateway=Gateway.new(creds))
+    gateway.cccredit(card, amount)
+    #xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, "ccsale")
   end
 
-  def self.void(transaction_id, creds)
-    xml = VirtualMerchant::XMLGenerator.generateVoid(transaction_id, creds)
-    self.process(xml, creds)
+  def self.void(transaction_id, creds, gateway=Gateway.new(creds))
+    gateway.ccvoid(transaction_id)
   end
 
   private
