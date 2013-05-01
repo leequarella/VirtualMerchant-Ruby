@@ -2,16 +2,16 @@ module VirtualMerchant
   class Communication
     require 'net/http'
     require "rexml/document"
-  
+
     attr_accessor :xml, :url, :http_referer, :uri
-  
+
     def initialize(data)
       @xml = data[:xml]
       @url = data[:url]
       @uri = URI.parse(@url)
       @http_referer = data[:http_referer]
     end
-  
+
     def send
       http = Net::HTTP.new(@uri.host, @uri.port)
       http.use_ssl = true
@@ -22,7 +22,7 @@ module VirtualMerchant
         false
       end
     end
-  
+
     private
     def header
       if @http_referer

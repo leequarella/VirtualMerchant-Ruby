@@ -1,8 +1,16 @@
 module VirtualMerchant
   class CreditCard
-    attr_accessor :name_on_card, :number, :expiration, :security_code, :last_four, 
+    attr_accessor :name_on_card, :number, :expiration, :security_code, :last_four,
       :swipe, :track2
-  
+
+    def self.from_swipe(swipe)
+      new(swipe: swipe)
+    end
+
+    def self.from_manual(data)
+      new(data)
+    end
+
     def initialize(info)
       if info[:swipe]
         @swipe = info[:swipe]
@@ -15,19 +23,19 @@ module VirtualMerchant
         @track2 = info[:track_2] if info[:track_2]
       end
     end
-  
+
     def from_swipe(swipe)
       self.track2 = extract_track_2(swipe)
       self.number = extract_card_number(swipe)
       self.expiration = extract_expiration(swipe)
       self.name_on_card = extract_name(swipe)
     end
-  
+
     def extract_card_number(swipe)
       card_number = swipe[2.. swipe.index('^')-1]
       card_number = card_number.split(' ').join('')
     end
-  
+
     def extract_expiration(swipe)
       secondCarrot = swipe.index("^", swipe.index("^")+1)
       card_expiration_year = swipe[secondCarrot+1..secondCarrot+2]

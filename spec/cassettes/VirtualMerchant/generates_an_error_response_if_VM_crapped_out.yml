@@ -1,0 +1,55 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://demo.myvirtualmerchant.com/VirtualMerchantDemo/processxml.do
+    body:
+      encoding: US-ASCII
+      string: ! "xmldata=<txn>\n        <ssl_merchant_id>002602</ssl_merchant_id>\n
+        \       <ssl_user_id>002602</ssl_user_id>\n        <ssl_pin>1YURP7</ssl_pin>\n
+        \       <ssl_transaction_type>ccsale</ssl_transaction_type>\n        <ssl_amount>0.01</ssl_amount>\n
+        \       <ssl_salestax>0.00</ssl_salestax>\n        <ssl_customer_code>3003</ssl_customer_code>\n
+        \       <ssl_card_present>Y</ssl_card_present>\n        <ssl_partial_auth_indicator>0</ssl_partial_auth_indicator><ssl_card_number>5000300020003003</ssl_card_number>\n
+        \         <ssl_exp_date>0513</ssl_exp_date><ssl_cvv2cvc2_indicator>1</ssl_cvv2cvc2_indicator>\n
+        \           <ssl_cvv2cvc2>1234</ssl_cvv2cvc2></txn>"
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 01 May 2013 19:11:05 GMT
+      Server:
+      - IBM_HTTP_Server
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+      Expires:
+      - '0'
+      Content-Disposition:
+      - inline; filename=response.xml
+      Set-Cookie:
+      - JSESSIONID=0000SaXxvdVGf2zRhEPwmKU_BTl:14j4qkv92; Path=/
+      - JSESSIONID=0000VT1O7IUvAtZqGG_ECLJLteR:14j4qkv92; Path=/
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/xml
+      Content-Language:
+      - en
+    body:
+      encoding: US-ASCII
+      string: ! '<?xml version="1.0" encoding="UTF-8"?>
+
+        <txn><ssl_approval_code>N11032</ssl_approval_code><ssl_invoice_number></ssl_invoice_number><ssl_cvv2_response></ssl_cvv2_response><ssl_exp_date>0513</ssl_exp_date><ssl_amount>0.01</ssl_amount><ssl_txn_id>AA49315-7615CC25-9111-4C42-8AD5-40F8257391D3</ssl_txn_id><ssl_result>0</ssl_result><ssl_card_number>50**********3003</ssl_card_number><ssl_account_balance>0.00</ssl_account_balance><ssl_txn_time>05/01/2013
+        03:11:05 PM</ssl_txn_time><ssl_result_message>APPROVAL</ssl_result_message><ssl_avs_response>
+        </ssl_avs_response></txn>'
+    http_version: 
+  recorded_at: Wed, 01 May 2013 19:11:03 GMT
+recorded_with: VCR 2.4.0

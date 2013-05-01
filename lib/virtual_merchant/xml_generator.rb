@@ -10,7 +10,7 @@ module VirtualMerchant
         </txn>"
       return xml
     end
-  
+
     def self.generate(card, amount, creds, transaction_type)
       xml = "xmldata=<txn>
         <ssl_merchant_id>" + creds.account_id + "</ssl_merchant_id>
@@ -29,14 +29,14 @@ module VirtualMerchant
         xml += "<ssl_card_number>" + card.number.to_s + "</ssl_card_number>
           <ssl_exp_date>" + card.expiration + "</ssl_exp_date>"
       end
-  
+
       if !card.security_code || card.security_code == ""
         xml += "<ssl_cvv2cvc2_indicator>0</ssl_cvv2cvc2_indicator>"
       else
         xml += "<ssl_cvv2cvc2_indicator>1</ssl_cvv2cvc2_indicator>
             <ssl_cvv2cvc2>" + card.security_code + "</ssl_cvv2cvc2>"
       end
-  
+
       xml += "</txn>"
       return xml
     end

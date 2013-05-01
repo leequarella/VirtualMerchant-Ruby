@@ -5,6 +5,8 @@ module VirtualMerchant
       :approval_code, :cvv2_response, :transaction_id, :transaction_time, :error, 
       :approved
 
+    alias_method :approved?, :approved
+
     def initialize(xml_string)
       if xml_string == false
         error_response("-1", "VirtualMerchant did not respond.")
@@ -13,12 +15,13 @@ module VirtualMerchant
       end
     end
 
+
     private
-    def decode_xml(xml_string) 
+    def decode_xml(xml_string)
       doc = REXML::Document.new(xml_string)
       REXML::XPath.each(doc, "txn") do |xml|
-        if xml.elements["errorCode"] 
-          #Something was wrong with the transaction so an 
+        if xml.elements["errorCode"]
+          #Something was wrong with the transaction so an
           #errorCode and errorMessage were sent back
           error_response(
             xml.elements["errorCode"].text, xml.elements["errorMessage"].text)

@@ -7,10 +7,10 @@ declined_void_xml = File.read("spec/support/declined_void_response.xml")
 
 describe VirtualMerchant::Response do
   it 'initializes from a happy approval xml string' do
-    response = VirtualMerchant::Response.new(approval_xml)    
+    response = VirtualMerchant::Response.new(approval_xml)
     response.approval_code.should eq "4444"
     response.approved.should be_true
-    response.cvv2_response.should be_nil 
+    response.cvv2_response.should be_nil
     response.blurred_card_number.should eq "50**********3003"
     response.exp_date.should eq "0513"
     response.result_message.should eq "APPROVAL"
@@ -20,14 +20,14 @@ describe VirtualMerchant::Response do
   end
 
   it "initializes from an unhappy approval xml string" do
-    response = VirtualMerchant::Response.new(bad_approval_xml)    
+    response = VirtualMerchant::Response.new(bad_approval_xml)
     response.approved.should be_false
     response.result_message.should eq "CALL AUTH CENTER"
     response.error.should eq "1"
   end
 
   it "initializes from an error xml string" do
-    response = VirtualMerchant::Response.new(error_xml)    
+    response = VirtualMerchant::Response.new(error_xml)
     response.approved.should be_false
     response.result_message.should eq( 
       "The Credit Card Number supplied in the authorization request appears to be invalid.")
