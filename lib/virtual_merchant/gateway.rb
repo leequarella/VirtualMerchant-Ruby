@@ -18,7 +18,7 @@ class Gateway
 
   def ccvoid(transaction_id)
     xml = VirtualMerchant::XMLGenerator.generateVoid(transaction_id, creds)
-    process(xml, creds)
+    process(xml)
   end
 
   def process(xml, amount=0)
