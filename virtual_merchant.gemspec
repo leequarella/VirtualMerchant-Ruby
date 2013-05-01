@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'virtual_merchant'
-  s.version     = '0.1.3'
+  s.version     = '0.2.0'
   s.date        = '2012-11-02'
   s.summary     = "Virtual Merchant API"
   s.description = "Makes it easy to charge credit cards with the VirtualMerchant API."
@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
                    "lib/virtual_merchant/credit_card.rb",
                    "lib/virtual_merchant/logger.rb",
                    "lib/virtual_merchant/response.rb",
-                   "lib/virtual_merchant/xml_generator.rb"]
+                   "lib/virtual_merchant/xml_generator.rb",
+                   "lib/virtual_merchant/gateway.rb"]
   s.homepage    = 'https://github.com/leequarella/VirtualMerchant-Ruby'
 end
