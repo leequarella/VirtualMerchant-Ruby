@@ -10,6 +10,16 @@ class Gateway
     xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, "ccsale")
     process(xml, amount)
   end
+  
+  def cccredit(card, amount)
+    xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, 'cccredit')
+    process(xml, amount)
+  end
+
+  def ccvoid(transaction_id)
+    xml = VirtualMerchant::XMLGenerator.generateVoid(transaction_id, creds)
+    process(xml)
+  end
 
   def process(xml, amount=0)
     communication = VirtualMerchant::Communication.new(

@@ -10,10 +10,10 @@ gem "virtual_merchant"
 
 
 ## Usage
-
+###Create Virtual Merchant Objects
 ```ruby
     #Create CreditCard via manual entry
-    cc = VirtualMerchant::CreditCard.new(
+    cc = VirtualMerchant::CreditCard.from_manual(
       name_on_card: <name_on_card>,
       number: <card_number>,
       expiration: <card_exp>,
@@ -21,7 +21,7 @@ gem "virtual_merchant"
 
     # OR
     # via MSR
-    cc = VirtualMerchant::CreditCard.new(
+    cc = VirtualMerchant::CreditCard.from_swipe(
       swipe: <swipe_data>)
 
     amount = VirtualMerchant::Amount.new(
@@ -34,8 +34,18 @@ gem "virtual_merchant"
       pin: <vm_user_pass>,
       demo: <boolean, optional>,
       referer: <uri of the http referer, optional>)
+```
 
+###Charge, Refund, or Void
+```ruby
+    #Charge
     response = VirtualMerchant.charge(cc, amount, creds)
+
+    #Refund
+    response = VirtualMerchant.refund(cc, amount, creds)
+
+    #Void
+    response = VirtualMerchant.void(transaction_id, creds)
 ```
 
 The response returned is a VirtualMerchant::Response object.
