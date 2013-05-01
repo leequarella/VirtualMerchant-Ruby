@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 01 May 2013 19:05:58 GMT
+      - Wed, 01 May 2013 20:29:25 GMT
       Server:
       - IBM_HTTP_Server
       Pragma:
@@ -35,8 +35,8 @@ http_interactions:
       Content-Disposition:
       - inline; filename=response.xml
       Set-Cookie:
-      - JSESSIONID=0000rC7YCE60oGz8IIIXNuCvPPI:14j4qkv92; Path=/
-      - JSESSIONID=0000uPoSqiIgNFSfky5VIUTXeNL:14j4qkv92; Path=/
+      - JSESSIONID=0000XGnhZjco5xgHhJJHaEYJzzS:14j4qkv92; Path=/
+      - JSESSIONID=0000kKsZM-fsIuBwAVsHHl-HOhk:14j4qkv92; Path=/
       Transfer-Encoding:
       - chunked
       Content-Type:
@@ -47,9 +47,9 @@ http_interactions:
       encoding: US-ASCII
       string: ! '<?xml version="1.0" encoding="UTF-8"?>
 
-        <txn><ssl_approval_code>N05032</ssl_approval_code><ssl_invoice_number></ssl_invoice_number><ssl_cvv2_response></ssl_cvv2_response><ssl_exp_date>0513</ssl_exp_date><ssl_amount>0.01</ssl_amount><ssl_txn_id>AA49315-7C872D0F-9709-4E02-BD01-23CA15B44DCE</ssl_txn_id><ssl_result>0</ssl_result><ssl_card_number>50**********3003</ssl_card_number><ssl_account_balance>0.00</ssl_account_balance><ssl_txn_time>05/01/2013
-        03:05:58 PM</ssl_txn_time><ssl_result_message>APPROVAL</ssl_result_message><ssl_avs_response>
+        <txn><ssl_approval_code>N29032</ssl_approval_code><ssl_invoice_number></ssl_invoice_number><ssl_cvv2_response></ssl_cvv2_response><ssl_exp_date>0513</ssl_exp_date><ssl_amount>0.01</ssl_amount><ssl_txn_id>AA49315-4F77875F-6411-439A-BACA-3B456A8C06CF</ssl_txn_id><ssl_result>0</ssl_result><ssl_card_number>50**********3003</ssl_card_number><ssl_account_balance>0.00</ssl_account_balance><ssl_txn_time>05/01/2013
+        04:29:25 PM</ssl_txn_time><ssl_result_message>APPROVAL</ssl_result_message><ssl_avs_response>
         </ssl_avs_response></txn>'
     http_version: 
-  recorded_at: Wed, 01 May 2013 19:05:56 GMT
+  recorded_at: Wed, 01 May 2013 20:29:22 GMT
 recorded_with: VCR 2.4.0

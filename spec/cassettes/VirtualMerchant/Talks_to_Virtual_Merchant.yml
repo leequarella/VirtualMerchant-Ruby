@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 01 May 2013 19:05:57 GMT
+      - Wed, 01 May 2013 20:29:24 GMT
       Server:
       - IBM_HTTP_Server
       Pragma:
@@ -35,7 +35,7 @@ http_interactions:
       Content-Disposition:
       - inline; filename=response.xml
       Set-Cookie:
-      - JSESSIONID=0000IbLN2idqBUKHeNfkak03pLr:1452826gr; Path=/
+      - JSESSIONID=0000ud8fDT2OyOeWoeXq6fm40e5:145282cti; Path=/
       Transfer-Encoding:
       - chunked
       Content-Type:
@@ -50,5 +50,5 @@ http_interactions:
         VirtualMerchant ID and/or User ID supplied in the authorization request is
         invalid.</errorMessage></txn>'
     http_version: 
-  recorded_at: Wed, 01 May 2013 19:05:55 GMT
+  recorded_at: Wed, 01 May 2013 20:29:22 GMT
 recorded_with: VCR 2.4.0

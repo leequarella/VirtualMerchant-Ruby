@@ -20,7 +20,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 01 May 2013 19:09:16 GMT
+      - Wed, 01 May 2013 20:29:28 GMT
       Server:
       - IBM_HTTP_Server
       Pragma:
@@ -32,8 +32,8 @@ http_interactions:
       Content-Disposition:
       - inline; filename=response.xml
       Set-Cookie:
-      - JSESSIONID=0000GfQbE-HGPFJCLEZ1y2jpGDc:14j4qkv92; Path=/
-      - JSESSIONID=0000zP5saNtI7tAJ-6l7U1dSqqJ:14j4qkv92; Path=/
+      - JSESSIONID=0000--JCp8X3IM6DmjqtKTgQI10:14j4qkv92; Path=/
+      - JSESSIONID=0000ZIqIhgYrvvMhNnzhxYjD69P:14j4qkv92; Path=/
       Transfer-Encoding:
       - chunked
       Content-Type:
@@ -47,5 +47,5 @@ http_interactions:
         <txn><errorCode>5040</errorCode><errorName>Invalid Transaction ID</errorName><errorMessage>The
         transaction ID is invalid for this transaction type</errorMessage></txn>'
     http_version: 
-  recorded_at: Wed, 01 May 2013 19:09:13 GMT
+  recorded_at: Wed, 01 May 2013 20:29:26 GMT
 recorded_with: VCR 2.4.0
