@@ -18,7 +18,7 @@ module VirtualMerchant
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       begin
         http.post(uri.request_uri, xml, header).body
-      rescue
+      rescue Exception => e
         false
       end
     end

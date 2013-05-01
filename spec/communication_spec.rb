@@ -1,6 +1,7 @@
+require 'spec_helper'
 require 'virtual_merchant/communication'
 
-describe VirtualMerchant::Communication do
+describe VirtualMerchant::Communication, vcr: true do
   before :each do
     @xml = File.read("spec/support/sending.xml")
     @url = 'https://demo.myvirtualmerchant.com/VirtualMerchantDemo/processxml.do'
@@ -18,7 +19,7 @@ describe VirtualMerchant::Communication do
     @sender.uri.should be_an_instance_of URI::HTTPS
   end
 
-  describe "talking to VM" do
+  describe "talking to VM", vcr: true do
     context "successful communication" do
       it "returns the xml string sent back by VM" do
         body = @sender.send

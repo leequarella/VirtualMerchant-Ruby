@@ -1,12 +1,5 @@
+require 'spec_helper'
 require 'virtual_merchant'
-require 'vcr'
-require 'webmock/rspec'
-
-VCR.configure do |config|
-  config.cassette_library_dir = "spec/cassettes"
-  config.hook_into :webmock
-  config.configure_rspec_metadata!
-end
 
 ##Useful vars ################################################################
   valid_creds = VirtualMerchant::Credentials.new(
