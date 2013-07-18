@@ -8,7 +8,6 @@ require 'virtual_merchant/logger'
 require 'virtual_merchant/xml_generator'
 require 'virtual_merchant/gateway'
 module VirtualMerchant
-
   def self.charge(card, amount, creds, gateway=Gateway.new(creds))
     gateway.ccsale(card, amount)
   end
@@ -20,16 +19,4 @@ module VirtualMerchant
   def self.void(transaction_id, creds, gateway=Gateway.new(creds))
     gateway.ccvoid(transaction_id)
   end
-
-  private
-  def self.process(xml, creds, amount=0)
-    Gateway.new(creds).process(xml, amount=0)
-    #communication = VirtualMerchant::Communication.new(
-    #  {xml: xml, url: self.url(creds.demo), referer: creds.referer})
-    #vm_response = communication.send
-    #response = VirtualMerchant::Response.new(vm_response)
-    #VirtualMerchant::Logger.new(response)
-    #response
-  end
-
 end
