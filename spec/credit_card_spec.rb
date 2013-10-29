@@ -1,7 +1,7 @@
 require 'virtual_merchant/credit_card'
 
 describe VirtualMerchant::CreditCard, "#amount" do
-  it "initiallizes" do
+  it "initializes" do
     cc = VirtualMerchant::CreditCard.from_manual(
       name_on_card: "Lee Quarella",
       number: "1234567890123456",
@@ -15,13 +15,27 @@ describe VirtualMerchant::CreditCard, "#amount" do
     cc.track2.should eq(";5555555555555555=555555555555555?")
   end
 
-  it "initiallizes from a swipe" do
+  it "initializes from a swipe" do
     cc = VirtualMerchant::CreditCard.from_swipe(
       "%B5555555555555555^CARDHOLDER/LEE F^5555555555555555555555555555555?;5555555555555555=555555555555555?")
     cc.name_on_card.should eq("LEE F CARDHOLDER")
     cc.number.should eq("5555555555555555")
     cc.expiration.should eq("5555")
     cc.track2.should eq(";5555555555555555=555555555555555?")
+  end
+
+  it "initializes from encrypted" do
+    audio_reader = {
+      track1: '12345',
+      track2: '67890',
+      serial: '55555',
+      last4: '1234'}
+    cc = VirtualMerchant::CreditCard.from_encrypted(
+      data = {audio_reader: audio_reader})
+    cc.encrypted_track_1.should eq('12345')
+    cc.encrypted_track_2.should eq('67890')
+    cc.ksn.should eq('55555')
+    cc.last4.should eq('1234')
   end
 
   it "can blur the card number" do

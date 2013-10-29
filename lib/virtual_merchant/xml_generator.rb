@@ -19,9 +19,22 @@ module VirtualMerchant
         <ssl_transaction_type>" + transaction_type + "</ssl_transaction_type>
         <ssl_amount>" + amount.total + "</ssl_amount>
         <ssl_salestax>" + amount.tax + "</ssl_salestax>
-        <ssl_customer_code>" + card.last_four + "</ssl_customer_code>
         <ssl_card_present>Y</ssl_card_present>
         <ssl_partial_auth_indicator>0</ssl_partial_auth_indicator>"
+
+      if card.last4
+        #Encrypted Card
+        xml += "<ssl_customer_code>" + card.last4 + "</ssl_customer_code>
+          <ssl_vm_mobile_source>BCPROC</ssl_vm_mobile_source>
+          <ssl_vm_encrypted_device>003</ssl_vm_encrypted_device>
+          <ssl_encrypted_track1_data>" + card.encrypted_track_1 + "</ssl_encrypted_track1_data>
+          <ssl_encrypted_track2_data>" + card.encrypted_track_2 + "</ssl_encrypted_track2_data>
+          <ssl_ksn>" + card.ksn + "</ssl_ksn>"
+
+      else
+        xml += "<ssl_customer_code>" + card.last_four + "</ssl_customer_code>"
+
+
       if card.track2
         xml += "<ssl_track_data>" + card.track2 + " </ssl_track_data>"
       else
