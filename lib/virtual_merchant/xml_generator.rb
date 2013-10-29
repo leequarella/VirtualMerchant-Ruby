@@ -33,6 +33,7 @@ module VirtualMerchant
 
       else
         xml += "<ssl_customer_code>" + card.last_four + "</ssl_customer_code>"
+      end
 
 
       if card.track2
