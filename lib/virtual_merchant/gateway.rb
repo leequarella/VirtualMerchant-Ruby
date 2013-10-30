@@ -10,7 +10,12 @@ class Gateway
     xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, "ccsale")
     process(xml, amount)
   end
-  
+
+  def ccaddrecurring(card, amount)
+    xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, "ccaddrecurring")
+    process(xml, amount)
+  end
+
   def cccredit(card, amount)
     xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, 'cccredit')
     process(xml, amount)

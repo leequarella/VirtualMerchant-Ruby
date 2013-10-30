@@ -12,6 +12,10 @@ module VirtualMerchant
     gateway.ccsale(card, amount)
   end
 
+  def self.add_recurring(card, amount, creds, gateway=Gateway.new(creds))
+    gateway.ccaddrecurring(card, amount)
+  end
+
   def self.refund(card, amount, creds, gateway=Gateway.new(creds))
     gateway.cccredit(card, amount)
   end

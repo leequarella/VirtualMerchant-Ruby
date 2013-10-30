@@ -14,6 +14,7 @@ module VirtualMerchant
     def self.generate(card, amount, creds, transaction_type)
       xml = "xmldata=<txn>"
         xml += basic(card, creds, transaction_type, amount)
+        xml += for_recurring(amount) if transaction_type == 'ccaddrecurring'
         if card.encrypted?
           xml += for_encrypted(card, creds)
         else
@@ -44,12 +45,18 @@ module VirtualMerchant
       end
     end
 
+    def self.for_recurring(amount)
+      "<ssl_next_payment_date>#{amount.next_payment_date}</ssl_next_payment_date>
+       <ssl_billing_cycle>#{amount.billing_cycle}</ssl_billing_cycle>
+       <ssl_end_of_month>#{amount.end_of_month}</ssl_end_of_month>"
+    end
+
     def self.for_encrypted(card, creds)
       "<ssl_vm_encrypted_device>003</ssl_vm_encrypted_device>
        <ssl_vm_mobile_source>#{creds.source}</ssl_vm_mobile_source>
        <ssl_encrypted_track1_data>#{card.encrypted_track_1}</ssl_encrypted_track1_data>
        <ssl_encrypted_track2_data>#{card.encrypted_track_2}</ssl_encrypted_track2_data>
-       <ssl_ksn>                  #{card.ksn}              </ssl_ksn>"
+       <ssl_ksn>#{creds.ksn}</ssl_ksn>"
     end
 
     def self.manual(card)
