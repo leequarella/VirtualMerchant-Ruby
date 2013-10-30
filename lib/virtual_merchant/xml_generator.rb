@@ -56,7 +56,8 @@ module VirtualMerchant
        <ssl_vm_mobile_source>#{creds.source}</ssl_vm_mobile_source>
        <ssl_encrypted_track1_data>#{card.encrypted_track_1}</ssl_encrypted_track1_data>
        <ssl_encrypted_track2_data>#{card.encrypted_track_2}</ssl_encrypted_track2_data>
-       <ssl_ksn>#{creds.ksn}</ssl_ksn>"
+       <ssl_ksn>#{creds.ksn}</ssl_ksn>
+       <ssl_vm_encrypted_device>#{creds.device_type}</ssl_vm_encrypted_device>"
     end
 
     def self.manual(card)
