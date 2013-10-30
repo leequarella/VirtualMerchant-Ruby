@@ -1,7 +1,7 @@
 module VirtualMerchant
   class CreditCard
     attr_accessor :name_on_card, :number, :expiration, :security_code, :swipe, :track2,
-      :encrypted_track_1, :encrypted_track_2, :ksn, :last_four, :encrypted, :swiped
+      :encrypted_track_1, :encrypted_track_2, :last_four, :encrypted, :swiped
 
     def self.from_swipe(swipe)
       if swipe.class == Hash && swipe[:encrypted]
@@ -29,7 +29,6 @@ module VirtualMerchant
       @encrypted         = true
       @encrypted_track_1 = info[:track_1]
       @encrypted_track_2 = info[:track_2]
-      @ksn               = info[:ksn]
       @last_four         = info[:last_four]
     end
 
