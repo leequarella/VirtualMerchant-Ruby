@@ -33,21 +33,22 @@ gem "virtual_merchant"
 
     amount = VirtualMerchant::Amount.new(
       total:             <total amount to charge>,
-      tax:               <amount of tax included in the total, optional>,
-      next_payment_date: <'MM/DD/YYYY', required for recurring payments>,
-      billing_cycle:     <'WEEKLY/MONTHLY', required for recurring payments>,
-      end_of_month:      <'Y/N', required for recurring payments occuring on
-                           last day of month>)
+      tax:               <amount of tax included in the total>, #optional
+      next_payment_date: <'MM/DD/YYYY'>, #required for recurring payments
+      billing_cycle:     <'WEEKLY/MONTHLY'>, #required for recurring payments
+      end_of_month:      <'Y/N'>) #required for recurring payments occuring on
+                                  #last day of month
 
     creds = VirtualMerchant::Credentials.new(
       account_id:  <vm_account_id>,
       user_id:     <vm_user_id>,
       pin:         <vm_user_pass>,
-      source:      <vm_mobile_source>,
-      ksn:         <ksn>,
-      device_type: <device_type, 001 for BulleT 002 for iDynamo 003 for uDynamo>,
-      demo:        <boolean, optional>,
-      referer:     <uri of the http referer, optional>)
+      source:      <vm_mobile_source>, #only required for encrypted MSR
+      ksn:         <ksn>, #only required for encrypted MSR
+      device_type: <device_type, 001 for BulleT 002 for iDynamo
+                    003 for uDynamo>, #only required for encrypted MSR
+      demo:        <boolean>, #optional
+      referer:     <uri of the http referer>, #optional)
 ```
 
 ###Charge, Refund, or Void
