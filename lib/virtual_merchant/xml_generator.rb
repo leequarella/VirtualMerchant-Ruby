@@ -2,57 +2,66 @@ module VirtualMerchant
   class XMLGenerator
     def self.generateVoid(transaction_id, creds)
       xml = "xmldata=<txn>
+        <ssl_transaction_type>ccvoid</ssl_transaction_type>
         <ssl_merchant_id>#{creds.account_id}</ssl_merchant_id>
         <ssl_user_id>#{creds.user_id}</ssl_user_id>
         <ssl_pin>#{creds.pin}</ssl_pin>
-        <ssl_transaction_type>ccvoid</ssl_transaction_type>
         <ssl_txn_id>#{transaction_id}</ssl_txn_id>
         </txn>"
       return xml
     end
 
     def self.generate(card, amount, creds, transaction_type)
-      xml = "xmldata=<txn>
-        <ssl_merchant_id>" + creds.account_id + "</ssl_merchant_id>
-        <ssl_user_id>" + creds.user_id + "</ssl_user_id>
-        <ssl_pin>" + creds.pin + "</ssl_pin>
-        <ssl_transaction_type>" + transaction_type + "</ssl_transaction_type>
-        <ssl_amount>" + amount.total + "</ssl_amount>
-        <ssl_salestax>" + amount.tax + "</ssl_salestax>
-        <ssl_card_present>Y</ssl_card_present>
-        <ssl_partial_auth_indicator>0</ssl_partial_auth_indicator>"
+      xml = "xmldata=<txn>"
+        xml += basic(card, creds, transaction_type, amount)
+        if card.encrypted?
+          xml += for_encrypted(card, creds)
+        else
+          xml += for_clear_text(card)
+        end
+      xml += "</txn>"
+      xml
+    end
 
-      if card.last4
-        #Encrypted Card
-        xml += "<ssl_customer_code>" + card.last4 + "</ssl_customer_code>
-          <ssl_vm_mobile_source>BCPROC</ssl_vm_mobile_source>
-          <ssl_vm_encrypted_device>003</ssl_vm_encrypted_device>
-          <ssl_encrypted_track1_data>" + card.encrypted_track_1 + "</ssl_encrypted_track1_data>
-          <ssl_encrypted_track2_data>" + card.encrypted_track_2 + "</ssl_encrypted_track2_data>
-          <ssl_ksn>" + card.ksn + "</ssl_ksn>"
+    private
+    def self.basic(card, creds, transaction_type, amount)
+      "<ssl_merchant_id>#{creds.account_id}</ssl_merchant_id>
+       <ssl_user_id>#{creds.user_id}</ssl_user_id>
+       <ssl_pin>#{creds.pin}</ssl_pin>
+       <ssl_transaction_type>#{transaction_type}</ssl_transaction_type>
+       <ssl_amount>#{amount.total}</ssl_amount>
+       <ssl_salestax>#{amount.tax}</ssl_salestax>
+       <ssl_customer_code>#{card.last_four}</ssl_customer_code>
+       <ssl_card_present>Y</ssl_card_present>
+       <ssl_partial_auth_indicator>0</ssl_partial_auth_indicator>"
+    end
 
+    def self.for_clear_text(card)
+      if card.swiped?
+        "<ssl_track_data>#{card.track2}</ssl_track_data>"
       else
-        xml += "<ssl_customer_code>" + card.last_four + "</ssl_customer_code>"
+        manual(card)
       end
+    end
 
+    def self.for_encrypted(card, creds)
+      "<ssl_vm_encrypted_device>003</ssl_vm_encrypted_device>
+       <ssl_vm_mobile_source>#{creds.source}</ssl_vm_mobile_source>
+       <ssl_encrypted_track1_data>#{card.encrypted_track_1}</ssl_encrypted_track1_data>
+       <ssl_encrypted_track2_data>#{card.encrypted_track_2}</ssl_encrypted_track2_data>
+       <ssl_ksn>                  #{card.ksn}              </ssl_ksn>"
+    end
 
-      if card.track2
-        xml += "<ssl_track_data>" + card.track2 + " </ssl_track_data>"
-      else
-        #Manual Entry
-        xml += "<ssl_card_number>" + card.number.to_s + "</ssl_card_number>
-          <ssl_exp_date>" + card.expiration + "</ssl_exp_date>"
-      end
-
+    def self.manual(card)
+      xml = "<ssl_card_number>#{card.number.to_s}</ssl_card_number>
+             <ssl_exp_date>#{card.expiration}</ssl_exp_date>"
       if !card.security_code || card.security_code == ""
         xml += "<ssl_cvv2cvc2_indicator>0</ssl_cvv2cvc2_indicator>"
       else
         xml += "<ssl_cvv2cvc2_indicator>1</ssl_cvv2cvc2_indicator>
-            <ssl_cvv2cvc2>" + card.security_code + "</ssl_cvv2cvc2>"
+                <ssl_cvv2cvc2>#{card.security_code}</ssl_cvv2cvc2>"
       end
-
-      xml += "</txn>"
-      return xml
+      xml
     end
   end
 end

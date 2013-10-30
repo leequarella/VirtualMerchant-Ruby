@@ -1,6 +1,6 @@
 require 'virtual_merchant/credit_card'
 
-describe VirtualMerchant::CreditCard, "#amount" do
+describe VirtualMerchant::CreditCard do
   it "initializes" do
     cc = VirtualMerchant::CreditCard.from_manual(
       name_on_card: "Lee Quarella",
@@ -25,17 +25,21 @@ describe VirtualMerchant::CreditCard, "#amount" do
   end
 
   it "initializes from encrypted" do
-    audio_reader = {
-      track1: '12345',
-      track2: '67890',
-      serial: '55555',
-      last4: '1234'}
-    cc = VirtualMerchant::CreditCard.from_encrypted(
-      data = {audio_reader: audio_reader})
-    cc.encrypted_track_1.should eq('12345')
-    cc.encrypted_track_2.should eq('67890')
-    cc.ksn.should eq('55555')
-    cc.last4.should eq('1234')
+      serial  = "2F9CFB042D001600"
+      track_1 = "474F492133496797C161C26752F61C74E094539003DFE7F70F2F51113C2CA457940157EA7D1449BED4E7CE9AEC1416D9"
+      track_2 = "EB442E8F4A9357086AF17D57B6EDFB6D99749F4DD78182FD07D57A343EAC3B1B90DC3F5E26D6505D"
+    swipe = {
+      encrypted: true,
+      serial:  serial,
+      track_1: track_1,
+      track_2: track_2,
+      device_type: "audio",
+      last_four:   "1234"}
+    cc = VirtualMerchant::CreditCard.from_swipe(swipe)
+    cc.encrypted_track_1.should eq(track_1)
+    cc.encrypted_track_2.should eq(track_2)
+    cc.ksn.should eq(serial)
+    cc.last_four.should eq('1234')
   end
 
   it "can blur the card number" do

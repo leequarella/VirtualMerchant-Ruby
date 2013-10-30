@@ -1,43 +1,63 @@
 module VirtualMerchant
   class CreditCard
-    attr_accessor :name_on_card, :number, :expiration, :security_code, :last_four,
-      :swipe, :track2, :encrypted_track_1, :encrypted_track_2, :ksn, :last4
+    attr_accessor :name_on_card, :number, :expiration, :security_code, :swipe, :track2,
+      :encrypted_track_1, :encrypted_track_2, :ksn, :last_four, :encrypted, :swiped
 
     def self.from_swipe(swipe)
-      new(swipe: swipe)
+      if swipe.class == Hash && swipe[:encrypted]
+        new(swipe)
+      else
+        new(swipe: swipe)
+      end
     end
 
     def self.from_manual(data)
       new(data)
     end
 
-    def self.from_encrypted(data)
-      new(data)
-    end
-
     def initialize(info)
-      if info[:swipe]
-        @swipe = info[:swipe]
-        self.from_swipe(swipe)
-      elsif info[:audio_reader]
-        @encrypted_track_1 = info[:audio_reader][:track1]
-        @encrypted_track_2 = info[:audio_reader][:track2]
-        @ksn               = info[:audio_reader][:serial]
-        @last4             = info[:audio_reader][:last4]
+      if info[:encrypted]
+        self.from_encrypted(info)
+      elsif info[:swipe]
+        self.from_swipe(info[:swipe])
       else
-        @name_on_card = info[:name_on_card] if info[:name_on_card]
-        @number = info[:number].to_s.gsub(/\s+/, "") if info[:number]
-        @expiration = info[:expiration].to_s if info[:expiration]
-        @security_code = info[:security_code].to_s if info[:security_code]
-        @track2 = info[:track_2] if info[:track_2]
+        self.from_manual(info)
       end
     end
 
-    def from_swipe(swipe)
-      self.track2 = extract_track_2(swipe)
-      self.number = extract_card_number(swipe)
-      self.expiration = extract_expiration(swipe)
-      self.name_on_card = extract_name(swipe)
+    def from_encrypted (info)
+      @encrypted         = true
+      @encrypted_track_1 = info[:track_1]
+      @encrypted_track_2 = info[:track_2]
+      @ksn               = info[:serial]
+      @last_four         = info[:last_four]
+    end
+
+    def from_swipe(swipe_raw)
+      @swiped       = true
+      @swipe        = swipe_raw
+      @track2       = extract_track_2(swipe)
+      @number       = extract_card_number(swipe)
+      @expiration   = extract_expiration(swipe)
+      @name_on_card = extract_name(swipe)
+      @last_four    = extract_last_four
+    end
+
+    def from_manual(info)
+      @name_on_card  = info[:name_on_card]                if info[:name_on_card]
+      @number        = info[:number].to_s.gsub(/\s+/, "") if info[:number]
+      @expiration    = info[:expiration].to_s             if info[:expiration]
+      @security_code = info[:security_code].to_s          if info[:security_code]
+      @track2        = info[:track_2]                     if info[:track_2]
+      @last_four     = extract_last_four
+    end
+
+    def encrypted?
+      self.encrypted
+    end
+
+    def swiped?
+      self.swiped
     end
 
     def extract_card_number(swipe)
@@ -82,7 +102,7 @@ module VirtualMerchant
       track2
     end
 
-    def last_four
+    def extract_last_four
       self.number[(self.number.length - 4)..self.number.length]
     end
 
