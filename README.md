@@ -29,18 +29,21 @@ gem "virtual_merchant"
       encrypted: true,
       track_1:   <encrypted_track_1>,
       track_2:   <encrypted_track_2>,
-      ksn:       <ksn>,
       last_four: <last_four>
 
     amount = VirtualMerchant::Amount.new(
-      total: <total amount to charge>,
-      tax:   <amount of tax included in the total, optional>)
+      total:             <total amount to charge>,
+      tax:               <amount of tax included in the total, optional>,
+      next_payment_date: <'MM/DD/YYYY', required for recurring payments>,
+      billing_cycle:     <'WEEKLY/MONTHLY', required for recurring payments>,
+      end_of_month:      <'Y/N', required for recurring payments occuring on last day of month>)
 
     creds = VirtualMerchant::Credentials.new(
       account_id: <vm_account_id>,
       user_id:    <vm_user_id>,
       pin:        <vm_user_pass>,
       source:     <vm_mobile_source>,
+      ksn:        <ksn>,
       demo:       <boolean, optional>,
       referer:    <uri of the http referer, optional>)
 ```
@@ -49,6 +52,9 @@ gem "virtual_merchant"
 ```ruby
     #Charge
     response = VirtualMerchant.charge(cc, amount, creds)
+
+    #Add Recurring Payment
+    response = VirtualMerchant.add_recurring(cc, amount, creds)
 
     #Refund
     response = VirtualMerchant.refund(cc, amount, creds)
