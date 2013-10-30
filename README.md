@@ -43,8 +43,8 @@ gem "virtual_merchant"
       account_id: <vm_account_id>,
       user_id:    <vm_user_id>,
       pin:        <vm_user_pass>,
-      source:     <vm_mobile_source>,
-      ksn:        <ksn>,
+      source:     <vm_mobile_source>, #only required for encrypted MSR
+      ksn:        <ksn>, #only required for encrypted MSR
       demo:       <boolean>, #optional
       referer:    <uri of the http referer>, #optional)
 ```
