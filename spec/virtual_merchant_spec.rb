@@ -6,6 +6,7 @@ require 'virtual_merchant'
     account_id: "002602",
     user_id:    "002602",
     pin:        "1YURP7",
+    source:     "BCPROC",
     referer:    "https://thisisauri.com",
     demo:       true)
 
@@ -29,16 +30,16 @@ require 'virtual_merchant'
     expiration:    "0513",
     security_code: "1234")
 
-  #serial  = "2F9CFB042D001600"
-  #track_1 = "474F492133496797C161C26752F61C74E094539003DFE7F70F2F51113C2CA457940157EA7D1449BED4E7CE9AEC1416D9"
-  #track_2 = "EB442E8F4A9357086AF17D57B6EDFB6D99749F4DD78182FD07D57A343EAC3B1B90DC3F5E26D6505D"
-  #encrypted_cc = VirtualMerchant::CreditCard.from_swipe({
-  #  encrypted: true,
-  #  serial:  serial,
-  #  track_1: track_1,
-  #  track_2: track_2,
-  #  device_type: "audio",
-  #  last_four:   "1234"})
+  serial  = "2F9CFB042D001600"
+  track_1 = "474F492133496797C161C26752F61C74E094539003DFE7F70F2F51113C2CA457940157EA7D1449BED4E7CE9AEC1416D9"
+  track_2 = "EB442E8F4A9357086AF17D57B6EDFB6D99749F4DD78182FD07D57A343EAC3B1B90DC3F5E26D6505D"
+  encrypted_cc = VirtualMerchant::CreditCard.from_swipe({
+    encrypted: true,
+    serial:  serial,
+    track_1: track_1,
+    track_2: track_2,
+    device_type: "audio",
+    last_four:   "1234"})
 
   amount            = VirtualMerchant::Amount.new(total: 0.01)
 
@@ -89,6 +90,10 @@ describe VirtualMerchant, vcr: true do
     end
 
     context "encrypted swipe" do
+      it "generates an declined response" do
+        response = VirtualMerchant.charge(encrypted_cc, amount, valid_creds)
+        response.should_not be_approved
+      end
     end
   end
 
