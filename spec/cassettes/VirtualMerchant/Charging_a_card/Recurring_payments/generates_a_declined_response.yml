@@ -1,0 +1,62 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://demo.myvirtualmerchant.com/VirtualMerchantDemo/processxml.do
+    body:
+      encoding: UTF-8
+      string: |-
+        xmldata=<txn><ssl_merchant_id>002602</ssl_merchant_id>
+               <ssl_user_id>002602</ssl_user_id>
+               <ssl_pin>1YURP7</ssl_pin>
+               <ssl_transaction_type>ccsale</ssl_transaction_type>
+               <ssl_amount>0.01</ssl_amount>
+               <ssl_salestax>0.00</ssl_salestax>
+               <ssl_customer_code>1234</ssl_customer_code>
+               <ssl_card_present>Y</ssl_card_present>
+               <ssl_partial_auth_indicator>0</ssl_partial_auth_indicator><ssl_vm_encrypted_device>003</ssl_vm_encrypted_device>
+               <ssl_vm_mobile_source>BCPROC</ssl_vm_mobile_source>
+               <ssl_encrypted_track1_data>474F492133496797C161C26752F61C74E094539003DFE7F70F2F51113C2CA457940157EA7D1449BED4E7CE9AEC1416D9</ssl_encrypted_track1_data>
+               <ssl_encrypted_track2_data>EB442E8F4A9357086AF17D57B6EDFB6D99749F4DD78182FD07D57A343EAC3B1B90DC3F5E26D6505D</ssl_encrypted_track2_data>
+               <ssl_ksn>                                </ssl_ksn></txn>
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 30 Oct 2013 18:57:06 GMT
+      Server:
+      - IBM_HTTP_Server
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+      Expires:
+      - '0'
+      Content-Disposition:
+      - inline; filename=response.xml
+      Set-Cookie:
+      - JSESSIONID=00000wVHG_qguJO82vTOhirK_tQ:14j4qkv92; Path=/; Secure
+      - JSESSIONID=0000KqoXEx90rhvXjvBRBBs1QYs:14j4qkv92; Path=/; Secure
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/xml
+      Content-Language:
+      - en
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="UTF-8"?>
+        <txn><errorCode>5090</errorCode><errorName>Invalid Mobile Device</errorName><errorMessage>Declined - Invalid Mobile Device</errorMessage></txn>
+    http_version: 
+  recorded_at: Wed, 30 Oct 2013 18:57:06 GMT
+recorded_with: VCR 2.4.0
