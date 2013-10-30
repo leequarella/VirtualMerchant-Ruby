@@ -40,13 +40,14 @@ gem "virtual_merchant"
                            last day of month>)
 
     creds = VirtualMerchant::Credentials.new(
-      account_id: <vm_account_id>,
-      user_id:    <vm_user_id>,
-      pin:        <vm_user_pass>,
-      source:     <vm_mobile_source>,
-      ksn:        <ksn>,
-      demo:       <boolean, optional>,
-      referer:    <uri of the http referer, optional>)
+      account_id:  <vm_account_id>,
+      user_id:     <vm_user_id>,
+      pin:         <vm_user_pass>,
+      source:      <vm_mobile_source>,
+      ksn:         <ksn>,
+      device_type: <device_type, 001 for BulleT 002 for iDynamo 003 for uDynamo>,
+      demo:        <boolean, optional>,
+      referer:     <uri of the http referer, optional>)
 ```
 
 ###Charge, Refund, or Void
