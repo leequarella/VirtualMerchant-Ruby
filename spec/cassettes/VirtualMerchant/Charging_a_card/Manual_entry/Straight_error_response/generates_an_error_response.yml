@@ -9,7 +9,7 @@ http_interactions:
         xmldata=<txn><ssl_merchant_id>002602</ssl_merchant_id>
                <ssl_user_id>002602</ssl_user_id>
                <ssl_pin>1YURP7</ssl_pin>
-               <ssl_transaction_type>cccredit</ssl_transaction_type>
+               <ssl_transaction_type>ccsale</ssl_transaction_type>
                <ssl_amount>0.01</ssl_amount>
                <ssl_salestax>0.00</ssl_salestax>
                <ssl_customer_code>3456</ssl_customer_code>
@@ -30,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 30 Oct 2013 15:47:39 GMT
+      - Wed, 30 Oct 2013 15:47:37 GMT
       Server:
       - IBM_HTTP_Server
       Pragma:
@@ -42,8 +42,8 @@ http_interactions:
       Content-Disposition:
       - inline; filename=response.xml
       Set-Cookie:
-      - JSESSIONID=00002ooAM6QjAopnA9RatkofELq:14j4qkv92; Path=/; Secure
-      - JSESSIONID=0000VuIY5lA4fThr5NK3Z6xOmM8:14j4qkv92; Path=/; Secure
+      - JSESSIONID=0000ld25NR5AWWxLuMHb34KcYKz:14j4qkv92; Path=/; Secure
+      - JSESSIONID=0000vdXB02JiNiiloHOG3yXoE7U:14j4qkv92; Path=/; Secure
       Transfer-Encoding:
       - chunked
       Content-Type:
@@ -56,5 +56,5 @@ http_interactions:
         <?xml version="1.0" encoding="UTF-8"?>
         <txn><errorCode>5000</errorCode><errorName>Credit Card Number Invalid</errorName><errorMessage>The Credit Card Number supplied in the authorization request appears to be invalid.</errorMessage></txn>
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 15:47:39 GMT
+  recorded_at: Wed, 30 Oct 2013 15:47:37 GMT
 recorded_with: VCR 2.4.0

@@ -4,14 +4,20 @@ http_interactions:
     method: post
     uri: https://demo.myvirtualmerchant.com/VirtualMerchantDemo/processxml.do
     body:
-      encoding: US-ASCII
-      string: ! "xmldata=<txn>\n        <ssl_merchant_id>002602</ssl_merchant_id>\n
-        \       <ssl_user_id>002602</ssl_user_id>\n        <ssl_pin>1YURP7</ssl_pin>\n
-        \       <ssl_transaction_type>ccvoid</ssl_transaction_type>\n        <ssl_txn_id>123</ssl_txn_id>\n
-        \       </txn>"
+      encoding: UTF-8
+      string: |-
+        xmldata=<txn>
+                <ssl_transaction_type>ccvoid</ssl_transaction_type>
+                <ssl_merchant_id>002602</ssl_merchant_id>
+                <ssl_user_id>002602</ssl_user_id>
+                <ssl_pin>1YURP7</ssl_pin>
+                <ssl_txn_id>123</ssl_txn_id>
+                </txn>
     headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
-      - ! '*/*'
+      - '*/*'
       User-Agent:
       - Ruby
   response:
@@ -20,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 01 May 2013 20:29:28 GMT
+      - Wed, 30 Oct 2013 15:47:41 GMT
       Server:
       - IBM_HTTP_Server
       Pragma:
@@ -32,8 +38,8 @@ http_interactions:
       Content-Disposition:
       - inline; filename=response.xml
       Set-Cookie:
-      - JSESSIONID=0000--JCp8X3IM6DmjqtKTgQI10:14j4qkv92; Path=/
-      - JSESSIONID=0000ZIqIhgYrvvMhNnzhxYjD69P:14j4qkv92; Path=/
+      - JSESSIONID=0000LuRTqs-NNMWp4HLy4d0cjGv:14j4qkv92; Path=/; Secure
+      - JSESSIONID=0000paxn8U9h1l3YIbJXYAVIx_m:14j4qkv92; Path=/; Secure
       Transfer-Encoding:
       - chunked
       Content-Type:
@@ -41,11 +47,10 @@ http_interactions:
       Content-Language:
       - en
     body:
-      encoding: US-ASCII
-      string: ! '<?xml version="1.0" encoding="UTF-8"?>
-
-        <txn><errorCode>5040</errorCode><errorName>Invalid Transaction ID</errorName><errorMessage>The
-        transaction ID is invalid for this transaction type</errorMessage></txn>'
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="UTF-8"?>
+        <txn><errorCode>5040</errorCode><errorName>Invalid Transaction ID</errorName><errorMessage>The transaction ID is invalid for this transaction type</errorMessage></txn>
     http_version: 
-  recorded_at: Wed, 01 May 2013 20:29:26 GMT
+  recorded_at: Wed, 30 Oct 2013 15:47:41 GMT
 recorded_with: VCR 2.4.0

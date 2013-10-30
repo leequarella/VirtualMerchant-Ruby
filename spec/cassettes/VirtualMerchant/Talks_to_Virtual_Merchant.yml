@@ -4,17 +4,24 @@ http_interactions:
     method: post
     uri: https://www.myvirtualmerchant.com/VirtualMerchant/processxml.do
     body:
-      encoding: US-ASCII
-      string: ! "xmldata=<txn>\n        <ssl_merchant_id>111</ssl_merchant_id>\n        <ssl_user_id>222</ssl_user_id>\n
-        \       <ssl_pin>abc</ssl_pin>\n        <ssl_transaction_type>ccsale</ssl_transaction_type>\n
-        \       <ssl_amount>0.01</ssl_amount>\n        <ssl_salestax>0.00</ssl_salestax>\n
-        \       <ssl_customer_code>3456</ssl_customer_code>\n        <ssl_card_present>Y</ssl_card_present>\n
-        \       <ssl_partial_auth_indicator>0</ssl_partial_auth_indicator><ssl_card_number>1234567890123456</ssl_card_number>\n
-        \         <ssl_exp_date>0513</ssl_exp_date><ssl_cvv2cvc2_indicator>1</ssl_cvv2cvc2_indicator>\n
-        \           <ssl_cvv2cvc2>1234</ssl_cvv2cvc2></txn>"
+      encoding: UTF-8
+      string: |-
+        xmldata=<txn><ssl_merchant_id>111</ssl_merchant_id>
+               <ssl_user_id>222</ssl_user_id>
+               <ssl_pin>abc</ssl_pin>
+               <ssl_transaction_type>ccsale</ssl_transaction_type>
+               <ssl_amount>0.01</ssl_amount>
+               <ssl_salestax>0.00</ssl_salestax>
+               <ssl_customer_code>3456</ssl_customer_code>
+               <ssl_card_present>Y</ssl_card_present>
+               <ssl_partial_auth_indicator>0</ssl_partial_auth_indicator><ssl_card_number>1234567890123456</ssl_card_number>
+                     <ssl_exp_date>0513</ssl_exp_date><ssl_cvv2cvc2_indicator>1</ssl_cvv2cvc2_indicator>
+                        <ssl_cvv2cvc2>1234</ssl_cvv2cvc2></txn>
     headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
-      - ! '*/*'
+      - '*/*'
       User-Agent:
       - Ruby
   response:
@@ -23,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 01 May 2013 20:29:24 GMT
+      - Wed, 30 Oct 2013 15:50:45 GMT
       Server:
       - IBM_HTTP_Server
       Pragma:
@@ -35,20 +42,19 @@ http_interactions:
       Content-Disposition:
       - inline; filename=response.xml
       Set-Cookie:
-      - JSESSIONID=0000ud8fDT2OyOeWoeXq6fm40e5:145282cti; Path=/
-      Transfer-Encoding:
-      - chunked
+      - JSESSIONID=00005Z8foibHQP9d7GEhA3PDbKk:145282075; Path=/; Secure
+      - JSESSIONID=0000KhAN2S1MxeRIQmSI5FiFLgq:145282075; Path=/; Secure
       Content-Type:
       - text/xml
       Content-Language:
       - en
+      Transfer-Encoding:
+      - chunked
     body:
-      encoding: US-ASCII
-      string: ! '<?xml version="1.0" encoding="UTF-8"?>
-
-        <txn><errorCode>4012</errorCode><errorName>VID/UID Invalid</errorName><errorMessage>The
-        VirtualMerchant ID and/or User ID supplied in the authorization request is
-        invalid.</errorMessage></txn>'
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="UTF-8"?>
+        <txn><errorCode>4012</errorCode><errorName>VID/UID Invalid</errorName><errorMessage>The VirtualMerchant ID and/or User ID supplied in the authorization request is invalid.</errorMessage></txn>
     http_version: 
-  recorded_at: Wed, 01 May 2013 20:29:22 GMT
+  recorded_at: Wed, 30 Oct 2013 15:50:45 GMT
 recorded_with: VCR 2.4.0
