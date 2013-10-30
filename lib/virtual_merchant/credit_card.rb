@@ -29,7 +29,7 @@ module VirtualMerchant
       @encrypted         = true
       @encrypted_track_1 = info[:track_1]
       @encrypted_track_2 = info[:track_2]
-      @ksn               = info[:serial]
+      @ksn               = info[:ksn]
       @last_four         = info[:last_four]
     end
 
