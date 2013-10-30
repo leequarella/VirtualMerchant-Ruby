@@ -36,7 +36,8 @@ gem "virtual_merchant"
       tax:               <amount of tax included in the total, optional>,
       next_payment_date: <'MM/DD/YYYY', required for recurring payments>,
       billing_cycle:     <'WEEKLY/MONTHLY', required for recurring payments>,
-      end_of_month:      <'Y/N', required for recurring payments occuring on last day of month>)
+      end_of_month:      <'Y/N', required for recurring payments occuring on
+                           last day of month>)
 
     creds = VirtualMerchant::Credentials.new(
       account_id: <vm_account_id>,
