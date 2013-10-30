@@ -33,11 +33,11 @@ gem "virtual_merchant"
 
     amount = VirtualMerchant::Amount.new(
       total:             <total amount to charge>,
-      tax:               <amount of tax included in the total, optional>,
-      next_payment_date: <'MM/DD/YYYY', required for recurring payments>,
-      billing_cycle:     <'WEEKLY/MONTHLY', required for recurring payments>,
-      end_of_month:      <'Y/N', required for recurring payments occuring on
-                           last day of month>)
+      tax:               <amount of tax included in the total>, #optional
+      next_payment_date: <'MM/DD/YYYY'>, #required for recurring payments
+      billing_cycle:     <'WEEKLY/MONTHLY'>, #required for recurring payments
+      end_of_month:      <'Y/N'>) #required for recurring payments occuring on
+                                  #last day of month
 
     creds = VirtualMerchant::Credentials.new(
       account_id: <vm_account_id>,
@@ -45,8 +45,8 @@ gem "virtual_merchant"
       pin:        <vm_user_pass>,
       source:     <vm_mobile_source>,
       ksn:        <ksn>,
-      demo:       <boolean, optional>,
-      referer:    <uri of the http referer, optional>)
+      demo:       <boolean>, #optional
+      referer:    <uri of the http referer>, #optional)
 ```
 
 ###Charge, Refund, or Void
