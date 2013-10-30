@@ -20,11 +20,11 @@ describe VirtualMerchant::Amount, "#amount" do
   end
 
   it "initializes with recurring data" do
-    amount = VirtualMerchant::Amount.new(total: 10.99, next_payment_date: '10/30/13',
+    amount = VirtualMerchant::Amount.new(total: 10.99, next_payment_date: '10/30/2013',
                                         billing_cycle: 'MONTHLY')
     amount.total.should eq("10.99")
     amount.tax.should eq("0.00")
-    amount.next_payment_date.should eq("10/30/13")
+    amount.next_payment_date.should eq("10/30/2013")
     amount.billing_cycle.should eq("MONTHLY")
     amount.end_of_month.should eq("Y")
   end
