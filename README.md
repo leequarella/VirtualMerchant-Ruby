@@ -14,25 +14,35 @@ gem "virtual_merchant"
 ```ruby
     #Create CreditCard via manual entry
     cc = VirtualMerchant::CreditCard.from_manual(
-      name_on_card: <name_on_card>,
-      number: <card_number>,
-      expiration: <card_exp>,
+      name_on_card:  <name_on_card>,
+      number:        <card_number>,
+      expiration:    <card_exp>,
       security_code: <cvv2>)
 
     # OR
-    # via MSR
+    # via unencrypted MSR
     cc = VirtualMerchant::CreditCard.from_swipe(<swipe_data>)
+
+    # OR
+    # via encrypted MSR
+    cc = VirtualMerchant::CreditCard.from_swipe(
+      encrypted: true,
+      track_1:   <encrypted_track_1>,
+      track_2:   <encrypted_track_2>,
+      ksn:       <ksn>,
+      last_four: <last_four>
 
     amount = VirtualMerchant::Amount.new(
       total: <total amount to charge>,
-      tax: <amount of tax included in the total, optional>)
+      tax:   <amount of tax included in the total, optional>)
 
     creds = VirtualMerchant::Credentials.new(
       account_id: <vm_account_id>,
-      user_id: <vm_user_id>,
-      pin: <vm_user_pass>,
-      demo: <boolean, optional>,
-      referer: <uri of the http referer, optional>)
+      user_id:    <vm_user_id>,
+      pin:        <vm_user_pass>,
+      source:     <vm_mobile_source>,
+      demo:       <boolean, optional>,
+      referer:    <uri of the http referer, optional>)
 ```
 
 ###Charge, Refund, or Void
