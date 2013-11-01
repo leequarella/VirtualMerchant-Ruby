@@ -30,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 30 Oct 2013 15:47:37 GMT
+      - Fri, 01 Nov 2013 19:49:20 GMT
       Server:
       - IBM_HTTP_Server
       Pragma:
@@ -42,8 +42,8 @@ http_interactions:
       Content-Disposition:
       - inline; filename=response.xml
       Set-Cookie:
-      - JSESSIONID=0000ld25NR5AWWxLuMHb34KcYKz:14j4qkv92; Path=/; Secure
-      - JSESSIONID=0000vdXB02JiNiiloHOG3yXoE7U:14j4qkv92; Path=/; Secure
+      - JSESSIONID=0000i1MxyxTMQ9R6mT_CfuWEr_p:14j4qkv92; Path=/; Secure
+      - JSESSIONID=0000kM0sEBvzRFease3m5rBdQw4:14j4qkv92; Path=/; Secure
       Transfer-Encoding:
       - chunked
       Content-Type:
@@ -56,5 +56,5 @@ http_interactions:
         <?xml version="1.0" encoding="UTF-8"?>
         <txn><errorCode>5000</errorCode><errorName>Credit Card Number Invalid</errorName><errorMessage>The Credit Card Number supplied in the authorization request appears to be invalid.</errorMessage></txn>
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 15:47:37 GMT
-recorded_with: VCR 2.4.0
+  recorded_at: Fri, 01 Nov 2013 19:49:20 GMT
+recorded_with: VCR 2.7.0
