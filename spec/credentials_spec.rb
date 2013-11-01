@@ -9,6 +9,7 @@ describe VirtualMerchant::Credentials, "#amount" do
       pin: "abc",
       source: 'DERP',
       ksn:  ksn,
+      vendor_id:  'HERP',
       device_type: '003',
       referer: "https://thisisauri.com")
     creds.account_id.should eq("111")
@@ -19,5 +20,6 @@ describe VirtualMerchant::Credentials, "#amount" do
     creds.source.should eq('DERP')
     creds.ksn.should eq(ksn)
     creds.device_type.should eq('003')
+    creds.vendor_id.should eq('HERP')
   end
 end
