@@ -18,7 +18,7 @@ http_interactions:
                <ssl_vm_mobile_source>BCPROC</ssl_vm_mobile_source>
                <ssl_encrypted_track1_data>474F492133496797C161C26752F61C74E094539003DFE7F70F2F51113C2CA457940157EA7D1449BED4E7CE9AEC1416D9</ssl_encrypted_track1_data>
                <ssl_encrypted_track2_data>EB442E8F4A9357086AF17D57B6EDFB6D99749F4DD78182FD07D57A343EAC3B1B90DC3F5E26D6505D</ssl_encrypted_track2_data>
-               <ssl_ksn>                                </ssl_ksn></txn>
+               <ssl_ksn>2F9CFB042D001600</ssl_ksn></txn>
     headers:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
@@ -32,7 +32,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 30 Oct 2013 18:57:07 GMT
+      - Thu, 31 Oct 2013 17:18:50 GMT
       Server:
       - IBM_HTTP_Server
       Pragma:
@@ -44,8 +44,8 @@ http_interactions:
       Content-Disposition:
       - inline; filename=response.xml
       Set-Cookie:
-      - JSESSIONID=0000MDG45u1KQfkt8WdZE1J5UnH:14j4qkv92; Path=/; Secure
-      - JSESSIONID=0000iDtAZ1d080HcTYd0UtF6IrA:14j4qkv92; Path=/; Secure
+      - JSESSIONID=0000D_V4BWco9kg3Dv2cO9jHbrE:14j4qkv92; Path=/; Secure
+      - JSESSIONID=0000urJXIovcmilu8nBvzXglTLc:14j4qkv92; Path=/; Secure
       Transfer-Encoding:
       - chunked
       Content-Type:
@@ -58,5 +58,5 @@ http_interactions:
         <?xml version="1.0" encoding="UTF-8"?>
         <txn><errorCode>5090</errorCode><errorName>Invalid Mobile Device</errorName><errorMessage>Declined - Invalid Mobile Device</errorMessage></txn>
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 18:57:06 GMT
+  recorded_at: Thu, 31 Oct 2013 17:18:49 GMT
 recorded_with: VCR 2.4.0
