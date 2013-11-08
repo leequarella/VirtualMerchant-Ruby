@@ -30,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 30 Oct 2013 15:50:45 GMT
+      - Fri, 01 Nov 2013 19:49:18 GMT
       Server:
       - IBM_HTTP_Server
       Pragma:
@@ -42,8 +42,8 @@ http_interactions:
       Content-Disposition:
       - inline; filename=response.xml
       Set-Cookie:
-      - JSESSIONID=00005Z8foibHQP9d7GEhA3PDbKk:145282075; Path=/; Secure
-      - JSESSIONID=0000KhAN2S1MxeRIQmSI5FiFLgq:145282075; Path=/; Secure
+      - JSESSIONID=0000bJxvCm40OsEpN-Teau77qbO:1452826gr; Path=/; Secure
+      - JSESSIONID=0000hV9hljJfWvdAgOhi0ThAb3X:1452826gr; Path=/; Secure
       Content-Type:
       - text/xml
       Content-Language:
@@ -56,5 +56,5 @@ http_interactions:
         <?xml version="1.0" encoding="UTF-8"?>
         <txn><errorCode>4012</errorCode><errorName>VID/UID Invalid</errorName><errorMessage>The VirtualMerchant ID and/or User ID supplied in the authorization request is invalid.</errorMessage></txn>
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 15:50:45 GMT
-recorded_with: VCR 2.4.0
+  recorded_at: Fri, 01 Nov 2013 19:49:18 GMT
+recorded_with: VCR 2.7.0

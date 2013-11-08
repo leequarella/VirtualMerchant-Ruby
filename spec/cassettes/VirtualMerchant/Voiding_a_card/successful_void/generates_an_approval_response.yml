@@ -30,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 30 Oct 2013 15:47:40 GMT
+      - Fri, 01 Nov 2013 19:49:26 GMT
       Server:
       - IBM_HTTP_Server
       Pragma:
@@ -42,8 +42,8 @@ http_interactions:
       Content-Disposition:
       - inline; filename=response.xml
       Set-Cookie:
-      - JSESSIONID=00006T7JxRX0k4PnDLgtCQOChcC:14j4qkv92; Path=/; Secure
-      - JSESSIONID=0000K0dGD0jDGWqqslygvBPn4tP:14j4qkv92; Path=/; Secure
+      - JSESSIONID=00008Jzmic2SiePZDtaEUfNgy1m:14j4qkv92; Path=/; Secure
+      - JSESSIONID=0000LnvxBUkRz9eN837B5dM6Yog:14j4qkv92; Path=/; Secure
       Transfer-Encoding:
       - chunked
       Content-Type:
@@ -54,9 +54,9 @@ http_interactions:
       encoding: UTF-8
       string: |-
         <?xml version="1.0" encoding="UTF-8"?>
-        <txn><ssl_approval_code>N47032</ssl_approval_code><ssl_invoice_number></ssl_invoice_number><ssl_cvv2_response></ssl_cvv2_response><ssl_exp_date>0515</ssl_exp_date><ssl_amount>0.01</ssl_amount><ssl_txn_id>AA49315-D2AC1EFC-677A-4534-9E60-0C6DB08BC514</ssl_txn_id><ssl_result>0</ssl_result><ssl_card_number>50**********3003</ssl_card_number><ssl_account_balance>0.00</ssl_account_balance><ssl_txn_time>10/30/2013 11:47:40 AM</ssl_txn_time><ssl_result_message>APPROVAL</ssl_result_message><ssl_avs_response> </ssl_avs_response></txn>
+        <txn><ssl_approval_code>N49032</ssl_approval_code><ssl_invoice_number></ssl_invoice_number><ssl_cvv2_response></ssl_cvv2_response><ssl_exp_date>0515</ssl_exp_date><ssl_amount>0.01</ssl_amount><ssl_txn_id>AA49315-E9660AE2-705B-4898-8AD4-D4720EBA2BCE</ssl_txn_id><ssl_result>0</ssl_result><ssl_card_number>50**********3003</ssl_card_number><ssl_account_balance>0.00</ssl_account_balance><ssl_txn_time>11/01/2013 03:49:26 PM</ssl_txn_time><ssl_result_message>APPROVAL</ssl_result_message><ssl_avs_response> </ssl_avs_response></txn>
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 15:47:40 GMT
+  recorded_at: Fri, 01 Nov 2013 19:49:26 GMT
 - request:
     method: post
     uri: https://demo.myvirtualmerchant.com/VirtualMerchantDemo/processxml.do
@@ -68,7 +68,7 @@ http_interactions:
                 <ssl_merchant_id>002602</ssl_merchant_id>
                 <ssl_user_id>002602</ssl_user_id>
                 <ssl_pin>1YURP7</ssl_pin>
-                <ssl_txn_id>AA49315-D2AC1EFC-677A-4534-9E60-0C6DB08BC514</ssl_txn_id>
+                <ssl_txn_id>AA49315-E9660AE2-705B-4898-8AD4-D4720EBA2BCE</ssl_txn_id>
                 </txn>
     headers:
       Accept-Encoding:
@@ -83,7 +83,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 30 Oct 2013 15:47:40 GMT
+      - Fri, 01 Nov 2013 19:49:27 GMT
       Server:
       - IBM_HTTP_Server
       Pragma:
@@ -95,8 +95,8 @@ http_interactions:
       Content-Disposition:
       - inline; filename=response.xml
       Set-Cookie:
-      - JSESSIONID=0000Tkybs1PmYbc5W0r6yf9LDmH:14j4qkv92; Path=/; Secure
-      - JSESSIONID=0000ZPbOQQ_ZxQ5r0zn-dKU94hM:14j4qkv92; Path=/; Secure
+      - JSESSIONID=0000G4KCchtmFsM-jPGbQzTP6w3:14j4qkv92; Path=/; Secure
+      - JSESSIONID=0000Xz3v8pODmWMo8V_HNJZ9ovs:14j4qkv92; Path=/; Secure
       Transfer-Encoding:
       - chunked
       Content-Type:
@@ -107,7 +107,7 @@ http_interactions:
       encoding: UTF-8
       string: |-
         <?xml version="1.0" encoding="UTF-8"?>
-        <txn><ssl_approval_code></ssl_approval_code><ssl_invoice_number></ssl_invoice_number><ssl_cvv2_response></ssl_cvv2_response><ssl_exp_date>0515</ssl_exp_date><ssl_amount>0.01</ssl_amount><ssl_txn_id>AA49315-D2AC1EFC-677A-4534-9E60-0C6DB08BC514</ssl_txn_id><ssl_result>0</ssl_result><ssl_card_number>50**********3003</ssl_card_number><ssl_account_balance>0.00</ssl_account_balance><ssl_txn_time>10/30/2013 11:47:40 AM</ssl_txn_time><ssl_result_message>APPROVAL</ssl_result_message><ssl_avs_response></ssl_avs_response></txn>
+        <txn><ssl_approval_code></ssl_approval_code><ssl_invoice_number></ssl_invoice_number><ssl_cvv2_response></ssl_cvv2_response><ssl_exp_date>0515</ssl_exp_date><ssl_amount>0.01</ssl_amount><ssl_txn_id>AA49315-E9660AE2-705B-4898-8AD4-D4720EBA2BCE</ssl_txn_id><ssl_result>0</ssl_result><ssl_card_number>50**********3003</ssl_card_number><ssl_account_balance>0.00</ssl_account_balance><ssl_txn_time>11/01/2013 03:49:26 PM</ssl_txn_time><ssl_result_message>APPROVAL</ssl_result_message><ssl_avs_response></ssl_avs_response></txn>
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 15:47:41 GMT
-recorded_with: VCR 2.4.0
+  recorded_at: Fri, 01 Nov 2013 19:49:27 GMT
+recorded_with: VCR 2.7.0

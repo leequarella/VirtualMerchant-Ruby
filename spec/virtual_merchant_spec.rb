@@ -7,8 +7,6 @@ require 'virtual_merchant'
     account_id: "002602",
     user_id:    "002602",
     pin:        "1YURP7",
-    source:     "BCPROC",
-    serial:      serial,
     referer:    "https://thisisauri.com",
     demo:       true)
 
@@ -41,7 +39,7 @@ require 'virtual_merchant'
     device_type: "audio",
     last_four:   "1234"})
 
-    amount            = VirtualMerchant::Amount.new(total: 0.01, next_payment_date: '10/31/13', billing_cycle: 'WEEKLY')
+  amount            = VirtualMerchant::Amount.new(total: 0.01, next_payment_date: '11/01/2013', billing_cycle: 'WEEKLY')
 
   approval_xml      = File.read("spec/support/approval_response.xml")
   bad_approval_xml  = File.read("spec/support/bad_approval_response.xml")
@@ -91,8 +89,8 @@ describe VirtualMerchant, vcr: true do
 
     context 'Recurring payments' do
       it 'generates a declined response' do
-        response = VirtualMerchant.add_recurring(encrypted_cc, amount, valid_creds)
-        response.should_not be_approved
+        response = VirtualMerchant.add_recurring(valid_cc, amount, valid_creds)
+        response.should be_approved
       end
     end
 

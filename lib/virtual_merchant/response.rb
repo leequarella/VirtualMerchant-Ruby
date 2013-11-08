@@ -38,29 +38,43 @@ module VirtualMerchant
     end
 
     def error_response(code, message)
-      @approved = false
+      @approved       = false
       @result_message = message
-      @error = code
+      @error          = code
     end
 
     def approval(xml)
-      @approved = true
-      @result_message = xml.elements["ssl_result_message"].text if xml.elements["ssl_result_message"]
-      @result = xml.elements["ssl_result"].text if xml.elements["ssl_result"]
+      basic(xml)
+      if xml.elements["ssl_result"]
+        normal_approval(xml)
+      else #recurring
+        recurring_approval(xml)
+      end
+    end
+
+    def basic(xml)
+      @approved            = true
+      @result_message      = xml.elements["ssl_result_message"].text
       @blurred_card_number = xml.elements["ssl_card_number"].text
-      @exp_date = xml.elements["ssl_exp_date"].text
-      @approval_code = xml.elements["ssl_approval_code"].text if xml.elements["ssl_approval_code"]
-      @cvv2_response = xml.elements["ssl_cvv2_response"].text if xml.elements["ssl_cvv2_response"]
-      @transaction_id = xml.elements["ssl_txn_id"].text if xml.elements["ssl_txn_id"]
-      @transaction_time = xml.elements["ssl_txn_time"].text if xml.elements["ssl_txn_time"]
-      #Recurring variables
-      @billing_cycle = xml.elements["ssl_billing_cycle"].text if xml.elements["ssl_billing_cycle"]
-      @start_payment_date = xml.elements["ssl_start_payment_date"].text if xml.elements["ssl_start_payment_date"]
-      @transaction_type = xml.elements["ssl_transaction_type"].text if xml.elements["ssl_transaction_type"]
-      @recurring_id = xml.elements["ssl_recurring_id"].text if xml.elements["ssl_recurring_id"]
-      @next_payment_date = xml.elements["ssl_next_payment_date"].text if xml.elements["ssl_next_payment_date"]
-      @skip_payment = xml.elements["ssl_skip_payment"].text if xml.elements["ssl_skip_payment"]
-      @recurring_batch_count = xml.elements["ssl_recurring_batch_count"].text if xml.elements["ssl_recurring_batch_count"]
+      @exp_date            = xml.elements["ssl_exp_date"].text
+    end
+
+    def normal_approval(xml)
+      @result           = xml.elements["ssl_result"].text
+      @approval_code    = xml.elements["ssl_approval_code"].text
+      @cvv2_response    = xml.elements["ssl_cvv2_response"].text
+      @transaction_id   = xml.elements["ssl_txn_id"].text
+      @transaction_time = xml.elements["ssl_txn_time"].text
+    end
+
+    def recurring_approval(xml)
+      @billing_cycle         = xml.elements["ssl_billing_cycle"].text
+      @start_payment_date    = xml.elements["ssl_start_payment_date"].text
+      @transaction_type      = xml.elements["ssl_transaction_type"].text
+      @recurring_id          = xml.elements["ssl_recurring_id"].text
+      @next_payment_date     = xml.elements["ssl_next_payment_date"].text
+      @skip_payment          = xml.elements["ssl_skip_payment"].text
+      @recurring_batch_count = xml.elements["ssl_recurring_batch_count"].text
     end
   end
 end
