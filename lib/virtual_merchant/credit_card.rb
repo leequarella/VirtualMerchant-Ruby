@@ -106,12 +106,20 @@ module VirtualMerchant
     end
 
    def blurred_number
-      number = self.number.to_s
-      leng = number.length
-      n = number[0..1]
-      (leng-6).times {n+= "*"}
-      n += number[number.length-4..number.length]
-      n
+     begin
+       number = self.number.to_s
+       leng = number.length
+       n = number[0..1]
+       (leng-6).times {n+= "*"}
+       n += number[number.length-4..number.length]
+       n
+     rescue Exception => e
+       puts "-"
+       puts "Error in VirtualMerchant-Ruby Gem when trying to blur card number: #{e}."
+       puts "You either passed a nil value for card_number or a number that is too short."
+       puts caller
+       puts "-"
+     end
     end
   end
 end
