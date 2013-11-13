@@ -61,8 +61,8 @@ module VirtualMerchant
 
     def normal_approval(xml)
       @result           = xml.elements["ssl_result"].text
-      @approval_code    = xml.elements["ssl_approval_code"].text
-      @cvv2_response    = xml.elements["ssl_cvv2_response"].text
+      @approval_code    = xml.elements["ssl_approval_code"].text if xml.elements["ssl_approval_code"]
+      @cvv2_response    = xml.elements["ssl_cvv2_response"].text if xml.elements["ssl_cvv2_response"]
       @transaction_id   = xml.elements["ssl_txn_id"].text
       @transaction_time = xml.elements["ssl_txn_time"].text
     end

@@ -39,7 +39,9 @@ require 'virtual_merchant'
     device_type: "audio",
     last_four:   "1234"})
 
-  amount            = VirtualMerchant::Amount.new(total: 0.01, next_payment_date: '11/01/2013', billing_cycle: 'WEEKLY')
+  amount            = VirtualMerchant::Amount.new(total: 0.01,
+                                                  next_payment_date: '11/01/2013',
+                                                  billing_cycle: 'WEEKLY')
 
   approval_xml      = File.read("spec/support/approval_response.xml")
   bad_approval_xml  = File.read("spec/support/bad_approval_response.xml")
@@ -129,21 +131,36 @@ describe VirtualMerchant, vcr: true do
   end
 
   describe 'Completing an authorized transaction' do
-    xit 'generates an approval response' do
+    it 'generates an approval response' do
+      amount.total = 0.15
+      transaction = VirtualMerchant.authorize(valid_cc, amount, valid_creds)
+      valid_creds.transaction_id = transaction.transaction_id
       response = VirtualMerchant.complete(valid_cc, amount, valid_creds)
       response.should be_approved
     end
 
-    it 'generates a declined response'
+    it 'generates a declined response' do
+      transaction = VirtualMerchant.authorize(valid_cc, amount, valid_creds)
+      valid_creds.transaction_id = transaction.transaction_id
+      response = VirtualMerchant.complete(valid_cc, amount, invalid_creds)
+      response.should_not be_approved
+    end
   end
 
   describe 'Deleting an authorized transaction' do
-    xit 'generates an approval response' do
-      response = VirtualMerchant.delete(valid_cc, amount, valid_creds)
+    it 'generates an approval response' do
+      transaction = VirtualMerchant.authorize(valid_cc, amount, valid_creds)
+      valid_creds.transaction_id = transaction.transaction_id
+      response    = VirtualMerchant.delete(valid_cc, amount, valid_creds)
       response.should be_approved
     end
 
-    it 'generates a declined response'
+    it 'generates a declined response' do
+      transaction = VirtualMerchant.authorize(valid_cc, amount, valid_creds)
+      valid_creds.transaction_id = transaction.transaction_id
+      response    = VirtualMerchant.delete(valid_cc, amount, invalid_creds)
+      response.should_not be_approved
+    end
   end
 
   describe "Refunding a card" do
