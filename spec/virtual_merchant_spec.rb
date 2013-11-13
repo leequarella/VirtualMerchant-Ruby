@@ -87,19 +87,63 @@ describe VirtualMerchant, vcr: true do
       end
     end
 
-    context 'Recurring payments' do
-      it 'generates a declined response' do
-        response = VirtualMerchant.add_recurring(valid_cc, amount, valid_creds)
-        response.should be_approved
-      end
-    end
-
     context "encrypted swipe" do
+      it 'generates an approval response'
+
       it "generates a declined response" do
         response = VirtualMerchant.charge(encrypted_cc, amount, valid_creds)
         response.should_not be_approved
       end
     end
+  end
+  describe 'Recurring Payments' do
+    it 'generates an approval response'
+
+    xit 'generates a declined response' do
+      response = VirtualMerchant.add_recurring(valid_cc, amount, valid_creds)
+      response.should be_approved
+    end
+  end
+
+  describe "Authorizing a card" do
+    context 'Manual entry' do
+      it 'generates an approval response' do
+        response = VirtualMerchant.authorize(valid_cc, amount, valid_creds)
+        response.should be_approved
+      end
+
+      it 'generates a declined response' do
+        response = VirtualMerchant.authorize(invalid_cc, amount, valid_creds)
+        response.should_not be_approved
+      end
+    end
+
+    context 'Encrypted swipe' do
+      xit 'generates an approval response' do
+        response = VirtualMerchant.authorize(encrypted_cc, amount, valid_creds)
+        response.should be_approved
+      end
+
+      it 'generates a declined response'
+    end
+  end
+
+  describe 'Completing an authorized transaction' do
+    xit 'generates an approval response' do
+      response = VirtualMerchant.complete(valid_cc, amount, valid_creds)
+      response.should be_approved
+    end
+
+    it 'generates a declined response'
+  end
+
+  describe 'Deleting an authorized transaction' do
+    xit 'generates an approval response' do
+      response = VirtualMerchant.delete(valid_cc, amount, valid_creds)
+      response.should be_approved
+    end
+
+    it 'generates a declined response'
   end
 
   describe "Refunding a card" do
