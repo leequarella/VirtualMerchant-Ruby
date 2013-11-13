@@ -73,9 +73,11 @@ gem "virtual_merchant"
 ```
 ###Complete and Delete Authorized Transactions
 Complete is used to convert an existing authorized transaction to a sale
-without a second authorization
-Delete attempts a reversal on a Sale and Auth Only credit transaction
-WARNING: Transactions deleted from the batch cannot be recovered
+without a second authorization.
+
+Delete attempts a reversal on a Sale and Auth Only credit transaction.
+
+WARNING: Transactions deleted from the batch cannot be recovered.
 ```ruby
     #Complete Authorized Transaction
     response = VirtualMerchant.complete(cc, amount, creds)
