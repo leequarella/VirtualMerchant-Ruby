@@ -86,6 +86,8 @@ WARNING: Transactions deleted from the batch cannot be recovered.
     response = VirtualMerchant.delete(cc, amount, creds)
 ```
 
+###Response
+
 The response returned is a VirtualMerchant::Response object.
 
 If a single transaction was sucessful and the card was approved, the response will have the following attrs:
