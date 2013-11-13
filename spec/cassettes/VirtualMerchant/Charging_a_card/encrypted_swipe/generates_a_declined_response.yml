@@ -14,8 +14,9 @@ http_interactions:
                <ssl_salestax>0.00</ssl_salestax>
                <ssl_customer_code>1234</ssl_customer_code>
                <ssl_card_present>Y</ssl_card_present>
-               <ssl_partial_auth_indicator>0</ssl_partial_auth_indicator><ssl_vm_encrypted_device>003</ssl_vm_encrypted_device>
-               <ssl_vm_mobile_source>BCPROC</ssl_vm_mobile_source>
+               <ssl_partial_auth_indicator>0</ssl_partial_auth_indicator><ssl_vm_mobile_source></ssl_vm_mobile_source>
+               <ssl_vendor_id></ssl_vendor_id>
+               <ssl_ksn></ssl_ksn>
                <ssl_encrypted_track1_data>474F492133496797C161C26752F61C74E094539003DFE7F70F2F51113C2CA457940157EA7D1449BED4E7CE9AEC1416D9</ssl_encrypted_track1_data>
                <ssl_encrypted_track2_data>EB442E8F4A9357086AF17D57B6EDFB6D99749F4DD78182FD07D57A343EAC3B1B90DC3F5E26D6505D</ssl_encrypted_track2_data>
                <ssl_ksn>2F9CFB042D001600</ssl_ksn></txn>
@@ -32,7 +33,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 31 Oct 2013 17:18:50 GMT
+      - Fri, 01 Nov 2013 19:49:24 GMT
       Server:
       - IBM_HTTP_Server
       Pragma:
@@ -44,8 +45,8 @@ http_interactions:
       Content-Disposition:
       - inline; filename=response.xml
       Set-Cookie:
-      - JSESSIONID=0000D_V4BWco9kg3Dv2cO9jHbrE:14j4qkv92; Path=/; Secure
-      - JSESSIONID=0000urJXIovcmilu8nBvzXglTLc:14j4qkv92; Path=/; Secure
+      - JSESSIONID=0000faBSkkb5Ti1dWWQiVK8xC20:14j4qkv92; Path=/; Secure
+      - JSESSIONID=0000qWRMEQufHPEq9aTwGaBBeZZ:14j4qkv92; Path=/; Secure
       Transfer-Encoding:
       - chunked
       Content-Type:
@@ -58,5 +59,5 @@ http_interactions:
         <?xml version="1.0" encoding="UTF-8"?>
         <txn><errorCode>5090</errorCode><errorName>Invalid Mobile Device</errorName><errorMessage>Declined - Invalid Mobile Device</errorMessage></txn>
     http_version: 
-  recorded_at: Thu, 31 Oct 2013 17:18:49 GMT
-recorded_with: VCR 2.4.0
+  recorded_at: Fri, 01 Nov 2013 19:49:24 GMT
+recorded_with: VCR 2.7.0

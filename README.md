@@ -45,6 +45,7 @@ gem "virtual_merchant"
       pin:         <vm_user_pass>,
       source:      <vm_mobile_source>, #only required for encrypted MSR
       ksn:         <ksn>, #only required for encrypted MSR
+      vender_id:   <vender_id>, #only required for encrypted MSR
       device_type: <device_type, 001 for BulleT 002 for iDynamo
                     003 for uDynamo>, #only required for encrypted MSR
       demo:        <boolean>, #optional
@@ -68,9 +69,9 @@ gem "virtual_merchant"
 
 The response returned is a VirtualMerchant::Response object.
 
-If the transaction was sucessful and the card was approved, the response will have the following attrs:
+If a single transaction was sucessful and the card was approved, the response will have the following attrs:
 
-    * result_type: "approval"
+    * approved: true
     * result_message: ssl_result_message
     * result: ssl_result
     * approval_code: ssl_approval_code
@@ -79,15 +80,28 @@ If the transaction was sucessful and the card was approved, the response will ha
     * cvv2_response: ssl_cvv2_response
     * transaction_id: ssl_txn_id
     * transaction_time: ssl_txn_tim
+
+
+If a recurring transaction was sucessful and the card was approved, the response will have the following attrs:
+
     * approved: true
+    * result_message: ssl_result_message
+    * blurred_card_number: ssl_card_number
+    * exp_date: ssl_exp_date
+    * billing_cycle: ssl_billing_cycle
+    * start_payment_date: ssl_start_payment_date
+    * transaction_type: ssl_transaction_type
+    * recurring_id: ssl_recurring_id
+    * next_payment_date: ssl_next_payment_date
+    * skip_payment: ssl_skip_payment
+    * recurring_batch_count: ssl_recurring_batch_count
 
 
-Otherwise there was some problem with the transaction, so the response will have these attrs:
+Otherwise there was some problem with a transaction, so the response will have these attrs:
 
-    * result_type: "error"
+    * approved: false
     * error: errorCode
     * result_message: errorMessage
-    * approved: false
 
 
 For more information on the Virtual Merchant API, view their docs at
