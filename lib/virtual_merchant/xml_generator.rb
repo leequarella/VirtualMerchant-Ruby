@@ -13,7 +13,8 @@ module VirtualMerchant
 
     def self.generate(card, amount, creds, transaction_type)
       xml = "xmldata=<txn>"
-        xml += basic(card, creds, transaction_type, amount)
+        xml += credentials(creds)
+        xml += basic(card, transaction_type, amount)
         xml += for_recurring(amount) if transaction_type == 'ccaddrecurring'
         if card.encrypted?
           xml += for_encrypted(card, creds)
@@ -24,12 +25,25 @@ module VirtualMerchant
       xml
     end
 
+    def self.modify(card, amount, creds, transaction_type)
+      xml = "xmldata=<txn>"
+        xml += credentials(creds)
+        xml += "<ssl_transaction_type>#{transaction_type}</ssl_transaction_type>
+                <ssl_txn_id>#{creds.transaction_id}</ssl_txn_id>
+                <ssl_amount>#{amount}</ssl_amount>"
+      xml += "</txn>"
+      xml
+    end
+
     private
-    def self.basic(card, creds, transaction_type, amount)
+    def self.credentials(creds)
       "<ssl_merchant_id>#{creds.account_id}</ssl_merchant_id>
        <ssl_user_id>#{creds.user_id}</ssl_user_id>
-       <ssl_pin>#{creds.pin}</ssl_pin>
-       <ssl_transaction_type>#{transaction_type}</ssl_transaction_type>
+       <ssl_pin>#{creds.pin}</ssl_pin>"
+    end
+
+    def self.basic(card, transaction_type, amount)
+       "<ssl_transaction_type>#{transaction_type}</ssl_transaction_type>
        <ssl_amount>#{amount.total}</ssl_amount>
        <ssl_salestax>#{amount.tax}</ssl_salestax>
        <ssl_customer_code>#{card.last_four}</ssl_customer_code>
