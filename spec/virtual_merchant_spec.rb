@@ -4,9 +4,9 @@ require 'virtual_merchant'
 ##Useful vars ################################################################
   serial  = "2F9CFB042D001600"
   valid_creds = VirtualMerchant::Credentials.new(
-    account_id: "002602",
-    user_id:    "002602",
-    pin:        "1YURP7",
+    account_id: "004400",
+    user_id:    "gateway",
+    pin:        "KQ46Q1",
     referer:    "https://thisisauri.com",
     demo:       true)
 
@@ -102,8 +102,8 @@ describe VirtualMerchant, vcr: true do
     it 'generates an approval response'
 
     xit 'generates a declined response' do
-      response = VirtualMerchant.add_recurring(valid_cc, amount, valid_creds)
-      response.should be_approved
+      response = VirtualMerchant.add_recurring(valid_cc, amount, invalid_creds)
+      response.should_not be_approved
     end
   end
 

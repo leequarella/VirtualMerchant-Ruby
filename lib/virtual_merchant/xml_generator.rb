@@ -26,12 +26,12 @@ module VirtualMerchant
     end
 
     def self.modify(card, amount, creds, transaction_type)
-      xml = "xmldata=<txn>"
-        xml += credentials(creds)
+      xml =    "xmldata=<txn>"
+        xml +=  credentials(creds)
         xml += "<ssl_transaction_type>#{transaction_type}</ssl_transaction_type>
                 <ssl_txn_id>#{creds.transaction_id}</ssl_txn_id>
                 <ssl_amount>#{amount.total}</ssl_amount>"
-      xml += "</txn>"
+      xml +=   "</txn>"
       xml
     end
 
