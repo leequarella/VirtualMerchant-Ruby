@@ -11,7 +11,6 @@ describe VirtualMerchant::Credentials, "#amount" do
       ksn:             ksn,
       vendor_id:      'HERP',
       device_type:    '003',
-      transaction_id: '123',
       referer:        "https://thisisauri.com")
     creds.account_id.should eq("111")
     creds.user_id.should eq("222")
@@ -22,6 +21,5 @@ describe VirtualMerchant::Credentials, "#amount" do
     creds.ksn.should eq(ksn)
     creds.device_type.should eq('003')
     creds.vendor_id.should eq('HERP')
-    creds.transaction_id.should eq('123')
   end
 end
