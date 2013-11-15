@@ -40,22 +40,25 @@ gem "virtual_merchant"
                                   #last day of month
 
     creds = VirtualMerchant::Credentials.new(
-      account_id:  <vm_account_id>,
-      user_id:     <vm_user_id>,
-      pin:         <vm_user_pass>,
-      source:      <vm_mobile_source>, #only required for encrypted MSR
-      ksn:         <ksn>, #only required for encrypted MSR
-      vender_id:   <vender_id>, #only required for encrypted MSR
-      device_type: <device_type, 001 for BulleT 002 for iDynamo
-                    003 for uDynamo>, #only required for encrypted MSR
-      demo:        <boolean>, #optional
-      referer:     <uri of the http referer>, #optional)
+      account_id:     <vm_account_id>,
+      user_id:        <vm_user_id>,
+      pin:            <vm_user_pass>,
+      source:         <vm_mobile_source>, #only required for encrypted MSR
+      ksn:            <ksn>, #only required for encrypted MSR
+      vender_id:      <vender_id>, #only required for encrypted MSR
+      device_type:    <device_type, 001 for BulleT 002 for iDynamo
+                       003 for uDynamo>, #only required for encrypted MSR
+      demo:           <boolean>, #optional
+      referer:        <uri of the http referer>, #optional)
 ```
 
-###Charge, Refund, or Void
+###Charge, Authorize, Refund, or Void
 ```ruby
     #Charge
     response = VirtualMerchant.charge(cc, amount, creds)
+
+    #Authorize
+    response = VirtualMerchant.authorize(cc, amount, creds)
 
     #Add Recurring Payment
     response = VirtualMerchant.add_recurring(cc, amount, creds)
@@ -66,6 +69,22 @@ gem "virtual_merchant"
     #Void
     response = VirtualMerchant.void(transaction_id, creds)
 ```
+###Complete and Delete Authorized Transactions
+Complete is used to convert an existing authorized transaction to a sale
+without a second authorization.
+
+Delete attempts a reversal on a Sale and Auth Only credit transaction.
+
+WARNING: Transactions deleted from the batch cannot be recovered.
+```ruby
+    #Complete Authorized Transaction
+    response = VirtualMerchant.complete(amount, creds, transaction_id)
+
+    #Delete Authorized Transaction
+    response = VirtualMerchant.delete(creds, transaction_id)
+```
+
+###Response
 
 The response returned is a VirtualMerchant::Response object.
 
@@ -102,6 +121,12 @@ Otherwise there was some problem with a transaction, so the response will have t
     * approved: false
     * error: errorCode
     * result_message: errorMessage
+
+
+###Testing
+
+For testing, edit the config.yml file to include your virtual merchant account credentials and encrypted card data.
+
 
 
 For more information on the Virtual Merchant API, view their docs at

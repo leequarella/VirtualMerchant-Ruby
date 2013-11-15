@@ -1,14 +1,22 @@
 require 'spec_helper'
 require 'virtual_merchant'
+require 'yaml'
+data = YAML.load_file "config.yml"
+demo_creds = data['demo_credentials']
+encrypted_card = data['encrypted_card_data']
 
 ##Useful vars ################################################################
   serial  = "2F9CFB042D001600"
   valid_creds = VirtualMerchant::Credentials.new(
-    account_id: "002602",
-    user_id:    "002602",
-    pin:        "1YURP7",
-    referer:    "https://thisisauri.com",
-    demo:       true)
+    account_id:  demo_creds['account_id'],
+    user_id:     demo_creds["user_id"],
+    pin:         demo_creds["pin"],
+    referer:     demo_creds["referer"],
+    source:      demo_creds['source'],
+    vendor_id:   demo_creds['vendor_id'],
+    ksn:         demo_creds['ksn'],
+    device_type: demo_creds['device_type'],
+    demo:        demo_creds['demo'])
 
   invalid_creds = VirtualMerchant::Credentials.new(
     account_id: 111,
@@ -30,16 +38,16 @@ require 'virtual_merchant'
     expiration:    "0513",
     security_code: "1234")
 
-  track_1 = "474F492133496797C161C26752F61C74E094539003DFE7F70F2F51113C2CA457940157EA7D1449BED4E7CE9AEC1416D9"
-  track_2 = "EB442E8F4A9357086AF17D57B6EDFB6D99749F4DD78182FD07D57A343EAC3B1B90DC3F5E26D6505D"
   encrypted_cc = VirtualMerchant::CreditCard.from_swipe({
     encrypted: true,
-    track_1: track_1,
-    track_2: track_2,
+    track_1: encrypted_card['track_1'],
+    track_2: encrypted_card['track_2'],
     device_type: "audio",
     last_four:   "1234"})
 
-  amount            = VirtualMerchant::Amount.new(total: 0.01, next_payment_date: '11/01/2013', billing_cycle: 'WEEKLY')
+  amount            = VirtualMerchant::Amount.new(total: 0.01,
+                                                  next_payment_date: 01/01/15,
+                                                  billing_cycle: 'WEEKLY')
 
   approval_xml      = File.read("spec/support/approval_response.xml")
   bad_approval_xml  = File.read("spec/support/bad_approval_response.xml")
@@ -87,18 +95,86 @@ describe VirtualMerchant, vcr: true do
       end
     end
 
-    context 'Recurring payments' do
-      it 'generates a declined response' do
-        response = VirtualMerchant.add_recurring(valid_cc, amount, valid_creds)
+    context "encrypted swipe" do
+      it 'generates an approval response' do
+        response = VirtualMerchant.charge(encrypted_cc, amount, valid_creds)
         response.should be_approved
+      end
+
+      it "generates a declined response" do
+        response = VirtualMerchant.charge(encrypted_cc, amount, invalid_creds)
+        response.should_not be_approved
+      end
+    end
+  end
+  describe 'Recurring Payments' do
+    it 'generates an approval response' do
+      response = VirtualMerchant.add_recurring(valid_cc, amount, invalid_creds)
+      response.should_not be_approved
+    end
+
+    it 'generates a declined response' do
+      response = VirtualMerchant.add_recurring(valid_cc, amount, invalid_creds)
+      response.should_not be_approved
+    end
+  end
+
+  describe "Authorizing a card" do
+    context 'Manual entry' do
+      it 'generates an approval response' do
+        response = VirtualMerchant.authorize(valid_cc, amount, valid_creds)
+        response.should be_approved
+      end
+
+      it 'generates a declined response' do
+        response = VirtualMerchant.authorize(invalid_cc, amount, valid_creds)
+        response.should_not be_approved
       end
     end
 
-    context "encrypted swipe" do
-      it "generates a declined response" do
-        response = VirtualMerchant.charge(encrypted_cc, amount, valid_creds)
+    context 'Encrypted swipe' do
+      it 'generates an approval response' do
+        response = VirtualMerchant.authorize(encrypted_cc, amount, valid_creds)
+        response.should be_approved
+      end
+
+      it 'generates a declined response' do
+        response = VirtualMerchant.authorize(encrypted_cc, amount, invalid_creds)
         response.should_not be_approved
       end
+    end
+  end
+
+  describe 'Completing an authorized transaction' do
+    it 'generates an approval response' do
+      amount.total = 0.15
+      transaction = VirtualMerchant.authorize(valid_cc, amount, valid_creds)
+      transaction_id = transaction.transaction_id
+      response = VirtualMerchant.complete(amount, valid_creds, transaction_id)
+      response.should be_approved
+    end
+
+    it 'generates a declined response' do
+      transaction = VirtualMerchant.authorize(valid_cc, amount, valid_creds)
+      transaction_id = transaction.transaction_id
+      response = VirtualMerchant.complete(amount, invalid_creds, transaction_id)
+      response.should_not be_approved
+    end
+  end
+
+  describe 'Deleting an authorized transaction' do
+    it 'generates an approval response' do
+      transaction = VirtualMerchant.authorize(valid_cc, amount, valid_creds)
+      transaction_id = transaction.transaction_id
+      response    = VirtualMerchant.delete(valid_creds, transaction_id)
+      response.should be_approved
+    end
+
+    it 'generates a declined response' do
+      transaction = VirtualMerchant.authorize(valid_cc, amount, valid_creds)
+      transaction_id = transaction.transaction_id
+      response    = VirtualMerchant.delete(invalid_creds, transaction_id)
+      response.should_not be_approved
     end
   end
 

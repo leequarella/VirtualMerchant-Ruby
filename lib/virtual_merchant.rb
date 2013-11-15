@@ -12,6 +12,18 @@ module VirtualMerchant
     gateway.ccsale(card, amount)
   end
 
+  def self.authorize(card, amount, creds, gateway=Gateway.new(creds))
+    gateway.ccauth(card, amount)
+  end
+
+  def self.complete(amount, creds, transaction_id, gateway=Gateway.new(creds))
+    gateway.cccomplete(amount, transaction_id)
+  end
+
+  def self.delete(creds, transaction_id, gateway=Gateway.new(creds))
+    gateway.ccdelete(transaction_id)
+  end
+
   def self.add_recurring(card, amount, creds, gateway=Gateway.new(creds))
     gateway.ccaddrecurring(card, amount)
   end

@@ -11,6 +11,22 @@ class Gateway
     process(xml, amount)
   end
 
+  def ccauth(card, amount)
+    xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, "ccauthonly")
+    process(xml, amount)
+  end
+
+  def cccomplete(amount, transaction_id)
+    xml = VirtualMerchant::XMLGenerator.modify(creds, "cccomplete",
+                                               transaction_id, amount)
+    process(xml, amount)
+  end
+
+  def ccdelete(transaction_id)
+    xml = VirtualMerchant::XMLGenerator.modify(creds, "ccdelete", transaction_id)
+    process(xml)
+  end
+
   def ccaddrecurring(card, amount)
     xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, "ccaddrecurring")
     process(xml, amount)
