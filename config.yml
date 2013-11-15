@@ -1,0 +1,6 @@
+demo_credentials:
+  account_id: 'vm_account_id'
+  user_id:    'vm_user_id'
+  pin:        'vm_pin'
+  referer:    'https://thisisauri.com'
+  demo:       true

@@ -125,5 +125,11 @@ Otherwise there was some problem with a transaction, so the response will have t
     * result_message: errorMessage
 
 
+###Testing
+
+For testing, edit the config.yml file to include your virtual merchant account credentials.
+
+
+
 For more information on the Virtual Merchant API, view their docs at
 https://www.myvirtualmerchant.com/VirtualMerchant/supportlandingvisitor.do

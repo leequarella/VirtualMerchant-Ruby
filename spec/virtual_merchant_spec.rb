@@ -1,14 +1,17 @@
 require 'spec_helper'
 require 'virtual_merchant'
+require 'yaml'
+data = YAML.load_file "config.yml"
+demo_creds = data['demo_credentials']
 
 ##Useful vars ################################################################
   serial  = "2F9CFB042D001600"
   valid_creds = VirtualMerchant::Credentials.new(
-    account_id: "004400",
-    user_id:    "gateway",
-    pin:        "KQ46Q1",
-    referer:    "https://thisisauri.com",
-    demo:       true)
+    account_id: demo_creds['account_id'],
+    user_id:    demo_creds["user_id"],
+    pin:        demo_creds["pin"],
+    referer:    demo_creds["referer"],
+    demo:       demo_creds['demo'])
 
   invalid_creds = VirtualMerchant::Credentials.new(
     account_id: 111,
