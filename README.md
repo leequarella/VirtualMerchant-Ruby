@@ -49,7 +49,7 @@ gem "virtual_merchant"
       device_type:    <device_type, 001 for BulleT 002 for iDynamo
                        003 for uDynamo>, #only required for encrypted MSR
       transaction_id: <transaction_id>, #only required for completing and
-                       deleting authorized transactions
+                       #deleting authorized transactions
       demo:           <boolean>, #optional
       referer:        <uri of the http referer>, #optional)
 ```
@@ -127,7 +127,7 @@ Otherwise there was some problem with a transaction, so the response will have t
 
 ###Testing
 
-For testing, edit the config.yml file to include your virtual merchant account credentials.
+For testing, edit the config.yml file to include your virtual merchant account credentials and encrypted card data.
 
 
 
