@@ -3,15 +3,20 @@ require 'virtual_merchant'
 require 'yaml'
 data = YAML.load_file "config.yml"
 demo_creds = data['demo_credentials']
+encrypted_card = data['encrypted_card_data']
 
 ##Useful vars ################################################################
   serial  = "2F9CFB042D001600"
   valid_creds = VirtualMerchant::Credentials.new(
-    account_id: demo_creds['account_id'],
-    user_id:    demo_creds["user_id"],
-    pin:        demo_creds["pin"],
-    referer:    demo_creds["referer"],
-    demo:       demo_creds['demo'])
+    account_id:  demo_creds['account_id'],
+    user_id:     demo_creds["user_id"],
+    pin:         demo_creds["pin"],
+    referer:     demo_creds["referer"],
+    source:      demo_creds['source'],
+    vendor_id:   demo_creds['vendor_id'],
+    ksn:         demo_creds['ksn'],
+    device_type: demo_creds['device_type'],
+    demo:        demo_creds['demo'])
 
   invalid_creds = VirtualMerchant::Credentials.new(
     account_id: 111,
@@ -33,17 +38,15 @@ demo_creds = data['demo_credentials']
     expiration:    "0513",
     security_code: "1234")
 
-  track_1 = "474F492133496797C161C26752F61C74E094539003DFE7F70F2F51113C2CA457940157EA7D1449BED4E7CE9AEC1416D9"
-  track_2 = "EB442E8F4A9357086AF17D57B6EDFB6D99749F4DD78182FD07D57A343EAC3B1B90DC3F5E26D6505D"
   encrypted_cc = VirtualMerchant::CreditCard.from_swipe({
     encrypted: true,
-    track_1: track_1,
-    track_2: track_2,
+    track_1: encrypted_card['track_1'],
+    track_2: encrypted_card['track_2'],
     device_type: "audio",
     last_four:   "1234"})
 
   amount            = VirtualMerchant::Amount.new(total: 0.01,
-                                                  next_payment_date: '11/01/2013',
+                                                  next_payment_date: 01/01/15,
                                                   billing_cycle: 'WEEKLY')
 
   approval_xml      = File.read("spec/support/approval_response.xml")
@@ -93,18 +96,24 @@ describe VirtualMerchant, vcr: true do
     end
 
     context "encrypted swipe" do
-      it 'generates an approval response'
+      it 'generates an approval response' do
+        response = VirtualMerchant.charge(encrypted_cc, amount, valid_creds)
+        response.should be_approved
+      end
 
       it "generates a declined response" do
-        response = VirtualMerchant.charge(encrypted_cc, amount, valid_creds)
+        response = VirtualMerchant.charge(encrypted_cc, amount, invalid_creds)
         response.should_not be_approved
       end
     end
   end
   describe 'Recurring Payments' do
-    it 'generates an approval response'
+    it 'generates an approval response' do
+      response = VirtualMerchant.add_recurring(valid_cc, amount, invalid_creds)
+      response.should_not be_approved
+    end
 
-    xit 'generates a declined response' do
+    it 'generates a declined response' do
       response = VirtualMerchant.add_recurring(valid_cc, amount, invalid_creds)
       response.should_not be_approved
     end
@@ -124,12 +133,15 @@ describe VirtualMerchant, vcr: true do
     end
 
     context 'Encrypted swipe' do
-      xit 'generates an approval response' do
+      it 'generates an approval response' do
         response = VirtualMerchant.authorize(encrypted_cc, amount, valid_creds)
         response.should be_approved
       end
 
-      it 'generates a declined response'
+      it 'generates a declined response' do
+        response = VirtualMerchant.authorize(encrypted_cc, amount, invalid_creds)
+        response.should_not be_approved
+      end
     end
   end
 

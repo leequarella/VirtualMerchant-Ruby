@@ -1,6 +1,14 @@
 demo_credentials:
-  account_id: 'vm_account_id'
-  user_id:    'vm_user_id'
-  pin:        'vm_pin'
-  referer:    'https://thisisauri.com'
-  demo:       true
+  account_id:  'vm_account_id'
+  user_id:     'vm_user_id'
+  pin:         'vm_pin'
+  referer:     'https://thisisauri.com'
+  demo:         true
+  source:      'vm_source'
+  vendor_id:   'vm_vendor_id'
+  ksn:         'device_ksn'
+  device_type: '003'
+
+encrypted_card_data:
+  track_1: 'encrypted_track_1'
+  track_2: 'encrypted_track_2'
