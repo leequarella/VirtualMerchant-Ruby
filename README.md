@@ -48,8 +48,6 @@ gem "virtual_merchant"
       vender_id:      <vender_id>, #only required for encrypted MSR
       device_type:    <device_type, 001 for BulleT 002 for iDynamo
                        003 for uDynamo>, #only required for encrypted MSR
-      transaction_id: <transaction_id>, #only required for completing and
-                       #deleting authorized transactions
       demo:           <boolean>, #optional
       referer:        <uri of the http referer>, #optional)
 ```
@@ -80,10 +78,10 @@ Delete attempts a reversal on a Sale and Auth Only credit transaction.
 WARNING: Transactions deleted from the batch cannot be recovered.
 ```ruby
     #Complete Authorized Transaction
-    response = VirtualMerchant.complete(cc, amount, creds)
+    response = VirtualMerchant.complete(amount, creds, transaction_id)
 
     #Delete Authorized Transaction
-    response = VirtualMerchant.delete(cc, amount, creds)
+    response = VirtualMerchant.delete(creds, transaction_id)
 ```
 
 ###Response

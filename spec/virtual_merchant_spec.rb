@@ -149,15 +149,15 @@ describe VirtualMerchant, vcr: true do
     it 'generates an approval response' do
       amount.total = 0.15
       transaction = VirtualMerchant.authorize(valid_cc, amount, valid_creds)
-      valid_creds.transaction_id = transaction.transaction_id
-      response = VirtualMerchant.complete(valid_cc, amount, valid_creds)
+      transaction_id = transaction.transaction_id
+      response = VirtualMerchant.complete(amount, valid_creds, transaction_id)
       response.should be_approved
     end
 
     it 'generates a declined response' do
       transaction = VirtualMerchant.authorize(valid_cc, amount, valid_creds)
-      valid_creds.transaction_id = transaction.transaction_id
-      response = VirtualMerchant.complete(valid_cc, amount, invalid_creds)
+      transaction_id = transaction.transaction_id
+      response = VirtualMerchant.complete(amount, invalid_creds, transaction_id)
       response.should_not be_approved
     end
   end
@@ -165,15 +165,15 @@ describe VirtualMerchant, vcr: true do
   describe 'Deleting an authorized transaction' do
     it 'generates an approval response' do
       transaction = VirtualMerchant.authorize(valid_cc, amount, valid_creds)
-      valid_creds.transaction_id = transaction.transaction_id
-      response    = VirtualMerchant.delete(valid_cc, amount, valid_creds)
+      transaction_id = transaction.transaction_id
+      response    = VirtualMerchant.delete(valid_creds, transaction_id)
       response.should be_approved
     end
 
     it 'generates a declined response' do
       transaction = VirtualMerchant.authorize(valid_cc, amount, valid_creds)
-      valid_creds.transaction_id = transaction.transaction_id
-      response    = VirtualMerchant.delete(valid_cc, amount, invalid_creds)
+      transaction_id = transaction.transaction_id
+      response    = VirtualMerchant.delete(invalid_creds, transaction_id)
       response.should_not be_approved
     end
   end

@@ -25,12 +25,14 @@ module VirtualMerchant
       xml
     end
 
-    def self.modify(card, amount, creds, transaction_type)
+    def self.modify(creds, transaction_type, transaction_id, amount=0)
       xml =    "xmldata=<txn>"
         xml +=  credentials(creds)
         xml += "<ssl_transaction_type>#{transaction_type}</ssl_transaction_type>
-                <ssl_txn_id>#{creds.transaction_id}</ssl_txn_id>
-                <ssl_amount>#{amount.total}</ssl_amount>"
+                <ssl_txn_id>#{transaction_id}</ssl_txn_id>"
+      if transaction_type == 'cccomplete'
+        xml += "<ssl_amount>#{amount.total}</ssl_amount>"
+      end
       xml +=   "</txn>"
       xml
     end
