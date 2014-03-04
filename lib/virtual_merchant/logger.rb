@@ -9,6 +9,7 @@ module VirtualMerchant
       end
       p "result_message " + response.result_message
       p "!!!!!!!!!!!!!!!!!!!!!!!! End Credit Response !!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+      p 'wat'
     end
   end
 end

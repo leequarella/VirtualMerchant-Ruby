@@ -11,7 +11,7 @@ module VirtualMerchant
       return xml
     end
 
-    def self.generate(card, amount, creds, transaction_type)
+    def self.generate(card, amount, creds, custom_fields, transaction_type)
       xml = "xmldata=<txn>"
         xml += credentials(creds)
         xml += basic(card, transaction_type, amount)
@@ -20,6 +20,9 @@ module VirtualMerchant
           xml += for_encrypted(card, creds)
         else
           xml += for_clear_text(card)
+        end
+        custom_fields.each do |key,value|
+          xml += "<#{key}>#{value}</#{key}>"
         end
       xml += "</txn>"
       xml

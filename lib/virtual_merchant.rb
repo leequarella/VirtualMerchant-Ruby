@@ -8,11 +8,11 @@ require 'virtual_merchant/logger'
 require 'virtual_merchant/xml_generator'
 require 'virtual_merchant/gateway'
 module VirtualMerchant
-  def self.charge(card, amount, creds, gateway=Gateway.new(creds))
-    gateway.ccsale(card, amount)
+  def self.charge(card, amount, creds, custom_fields={}, gateway=Gateway.new(creds))
+    gateway.ccsale(card, amount, custom_fields)
   end
 
-  def self.authorize(card, amount, creds, gateway=Gateway.new(creds))
+  def self.authorize(card, amount, creds, custom_fields={}, gateway=Gateway.new(creds))
     gateway.ccauth(card, amount)
   end
 
@@ -24,8 +24,8 @@ module VirtualMerchant
     gateway.ccdelete(transaction_id)
   end
 
-  def self.add_recurring(card, amount, creds, gateway=Gateway.new(creds))
-    gateway.ccaddrecurring(card, amount)
+  def self.add_recurring(card, amount, creds, custom_fields={}, gateway=Gateway.new(creds))
+    gateway.ccaddrecurring(card, amount, custom_fields)
   end
 
   def self.refund(card, amount, creds, gateway=Gateway.new(creds))
