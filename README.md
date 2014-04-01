@@ -121,6 +121,14 @@ Otherwise there was some problem with a transaction, so the response will have t
     * approved: false
     * error: errorCode
     * result_message: errorMessage
+    
+### Debugging
+
+There is a logger that will print some info from responses to make debugging a little easier.  It can be turned on with
+
+```ruby
+  VirtualMerchant::Logger.on!
+```
 
 
 ###Testing
