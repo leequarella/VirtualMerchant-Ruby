@@ -13,7 +13,7 @@ module VirtualMerchant
   end
 
   def self.authorize(card, amount, creds, custom_fields={}, gateway=Gateway.new(creds))
-    gateway.ccauth(card, amount)
+    gateway.ccauth(card, amount, custom_fields)
   end
 
   def self.complete(amount, creds, transaction_id, gateway=Gateway.new(creds))
@@ -28,8 +28,8 @@ module VirtualMerchant
     gateway.ccaddrecurring(card, amount, custom_fields)
   end
 
-  def self.refund(card, amount, creds, gateway=Gateway.new(creds))
-    gateway.cccredit(card, amount)
+  def self.refund(card, amount, creds, custom_fields={}, gateway=Gateway.new(creds))
+    gateway.cccredit(card, amount, custom_fields)
   end
 
   def self.void(transaction_id, creds, gateway=Gateway.new(creds))
