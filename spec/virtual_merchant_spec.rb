@@ -5,6 +5,8 @@ data = YAML.load_file "config.yml"
 demo_creds = data['demo_credentials']
 encrypted_card = data['encrypted_card_data']
 
+VirtualMerchant::Logger.off!
+
 ##Useful vars ################################################################
   serial  = "2F9CFB042D001600"
   valid_creds = VirtualMerchant::Credentials.new(
@@ -45,9 +47,9 @@ encrypted_card = data['encrypted_card_data']
     device_type: "audio",
     last_four:   "1234"})
 
-  amount            = VirtualMerchant::Amount.new(total: 0.01,
-                                                  next_payment_date: 01/01/15,
-                                                  billing_cycle: 'WEEKLY')
+  amount = VirtualMerchant::Amount.new(total: 0.01,
+                                       next_payment_date: 01/01/15,
+                                       billing_cycle: 'WEEKLY')
 
   approval_xml      = File.read("spec/support/approval_response.xml")
   bad_approval_xml  = File.read("spec/support/bad_approval_response.xml")

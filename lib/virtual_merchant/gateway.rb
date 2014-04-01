@@ -46,7 +46,7 @@ class Gateway
       {xml: xml, url: url(creds.demo), referer: creds.referer})
     vm_response = communication.send
     response = VirtualMerchant::Response.new(vm_response)
-    VirtualMerchant::Logger.new(response)
+    VirtualMerchant::Logger.log_response(response)
     response
   end
 

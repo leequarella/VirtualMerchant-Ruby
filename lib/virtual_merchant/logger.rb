@@ -1,6 +1,17 @@
 module VirtualMerchant
   class Logger
-    def initialize(response = {})
+    @@on = false
+
+    def self.on!
+      @@on = true
+    end
+
+    def self.off!
+      @@on = false
+    end
+
+    def self.log_response(response)
+      return unless @@on
       p "!!!!!!!!!!!!!!!!!!!!!!!! Credit Response !!!!!!!!!!!!!!!!!!!!!!!!!!!!"
       if response.result
         p "result " + response.result
