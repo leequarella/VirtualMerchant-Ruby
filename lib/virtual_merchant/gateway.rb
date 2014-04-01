@@ -1,4 +1,3 @@
-require "pp"
 class Gateway
   attr_reader :creds
 
