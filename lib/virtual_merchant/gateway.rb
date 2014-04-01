@@ -5,13 +5,13 @@ class Gateway
     @creds = creds
   end
 
-  def ccsale(card, amount)
-    xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, "ccsale")
+  def ccsale(card, amount, custom_fields)
+    xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, custom_fields, "ccsale")
     process(xml, amount)
   end
 
-  def ccauth(card, amount)
-    xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, "ccauthonly")
+  def ccauth(card, amount, custom_fields)
+    xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, custom_fields, "ccauthonly")
     process(xml, amount)
   end
 
@@ -27,12 +27,12 @@ class Gateway
   end
 
   def ccaddrecurring(card, amount)
-    xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, "ccaddrecurring")
+    xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, custom_fields, "ccaddrecurring")
     process(xml, amount)
   end
 
   def cccredit(card, amount)
-    xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, 'cccredit')
+    xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, custom_fields, 'cccredit')
     process(xml, amount)
   end
 

@@ -1,11 +1,11 @@
 Gem::Specification.new do |s|
   s.name        = 'virtual_merchant'
-  s.version     = '0.3.6'
+  s.version     = '0.3.7'
   s.date        = '2012-11-02'
   s.summary     = "Virtual Merchant API"
   s.description = "Makes it easy to charge credit cards with the VirtualMerchant API."
   s.authors     = ["Lee Quarella"]
-  s.email       = 'lee@lucidfrog.com'
+  s.email       = 'leequarella@gmail.com'
   s.license     = 'MIT'
   s.files       = ["lib/virtual_merchant.rb",
                    "lib/virtual_merchant/amount.rb",
