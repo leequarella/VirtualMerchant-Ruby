@@ -8,6 +8,7 @@ module VirtualMerchant
         <ssl_pin>#{creds.pin}</ssl_pin>
         <ssl_txn_id>#{transaction_id}</ssl_txn_id>
         </txn>"
+      VirtualMerchant::Logger.xml('VOID OUTPUT', xml)
       return xml
     end
 
@@ -25,6 +26,7 @@ module VirtualMerchant
           xml += "<#{key}>#{value}</#{key}>"
         end
       xml += "</txn>"
+      VirtualMerchant::Logger.xml('NORMAL OUTPUT', xml)
       xml
     end
 
@@ -37,6 +39,7 @@ module VirtualMerchant
         xml += "<ssl_amount>#{amount.total}</ssl_amount>"
       end
       xml +=   "</txn>"
+      VirtualMerchant::Logger.xml('MODIFY TRANSACTION OUTPUT', xml)
       xml
     end
 
