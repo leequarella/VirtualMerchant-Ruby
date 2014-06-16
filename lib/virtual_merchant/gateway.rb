@@ -6,13 +6,29 @@ class Gateway
   end
 
   def ccsale(card, amount, custom_fields)
-    xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, custom_fields, "ccsale")
-    process(xml, amount)
+    if card.valid?
+      xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, custom_fields, "ccsale")
+      process(xml, amount)
+    else
+      card.errors.each do |code, msg|
+        xml = VirtualMerchant::XMLGenerator.error(code, msg)
+        response = VirtualMercahnt::Resoponse.new(xml)
+        response
+      end
+    end
   end
 
   def ccauth(card, amount, custom_fields)
-    xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, custom_fields, "ccauthonly")
-    process(xml, amount)
+    if card.valid?
+      xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, custom_fields, "ccauthonly")
+      process(xml, amount)
+    else
+      card.errors.each do |code, msg|
+        xml = VirtualMerchant::XMLGenerator.error(code, msg)
+        response = VirtualMercahnt::Resoponse.new(xml)
+        response
+      end
+    end
   end
 
   def cccomplete(amount, transaction_id)
@@ -27,13 +43,29 @@ class Gateway
   end
 
   def ccaddrecurring(card, amount, custom_fields)
-    xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, custom_fields, "ccaddrecurring")
-    process(xml, amount)
+    if card.valid?
+      xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, custom_fields, "ccaddrecurring")
+      process(xml, amount)
+    else
+      card.errors.each do |code, msg|
+        xml = VirtualMerchant::XMLGenerator.error(code, msg)
+        response = VirtualMercahnt::Resoponse.new(xml)
+        response
+      end
+    end
   end
 
   def cccredit(card, amount, custom_fields)
-    xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, custom_fields, 'cccredit')
-    process(xml, amount)
+    if card.valid?
+      xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, custom_fields, 'cccredit')
+      process(xml, amount)
+    else
+      card.errors.each do |code, msg|
+        xml = VirtualMerchant::XMLGenerator.error(code, msg)
+        response = VirtualMercahnt::Resoponse.new(xml)
+        response
+      end
+    end
   end
 
   def ccvoid(transaction_id)

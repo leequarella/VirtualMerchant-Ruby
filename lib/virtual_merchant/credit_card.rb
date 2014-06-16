@@ -1,7 +1,8 @@
+require 'virtual_merchant/swipe_extractor'
 module VirtualMerchant
   class CreditCard
     attr_accessor :name_on_card, :number, :expiration, :security_code, :swipe, :track2,
-      :encrypted_track_1, :encrypted_track_2, :last_four, :encrypted, :swiped
+      :encrypted_track_1, :encrypted_track_2, :last_four, :encrypted, :swiped, :valid, :errors
 
     def self.from_swipe(swipe)
       if swipe.class == Hash && swipe[:encrypted]
@@ -16,6 +17,7 @@ module VirtualMerchant
     end
 
     def initialize(info)
+      @errors = {}
       if info[:encrypted]
         self.from_encrypted(info)
       elsif info[:swipe]
@@ -26,6 +28,7 @@ module VirtualMerchant
     end
 
     def from_encrypted (info)
+      @errors            = {}
       @encrypted         = true
       @encrypted_track_1 = info[:track_1]
       @encrypted_track_2 = info[:track_2]
@@ -33,22 +36,35 @@ module VirtualMerchant
     end
 
     def from_swipe(swipe_raw)
-      @swiped       = true
-      @swipe        = swipe_raw
-      @track2       = extract_track_2(swipe)
-      @number       = extract_card_number(swipe)
-      @expiration   = extract_expiration(swipe)
-      @name_on_card = extract_name(swipe)
-      @last_four    = extract_last_four
+      @errors = {}
+      if check_swipe(swipe_raw)
+        @valid        = true
+        @swiped       = true
+        @swipe        = swipe_raw
+        @track2       = SwipeExtractor.get_track_2(swipe)
+        @number       = SwipeExtractor.get_card_number(swipe)
+        @expiration   = SwipeExtractor.get_expiration(swipe)
+        @name_on_card = SwipeExtractor.get_name(swipe)
+        @last_four    = SwipeExtractor.get_last_four(@number)
+      else
+        @valid = false
+      end
     end
 
     def from_manual(info)
-      @name_on_card  = info[:name_on_card]                if info[:name_on_card]
-      @number        = info[:number].to_s.gsub(/\s+/, "") if info[:number]
-      @expiration    = info[:expiration].to_s             if info[:expiration]
-      @security_code = info[:security_code].to_s          if info[:security_code]
-      @track2        = info[:track_2]                     if info[:track_2]
-      @last_four     = extract_last_four
+      @errors = {}
+      if info[:number] && check_luhn(info[:number].to_s.gsub(/\s+/, ""))
+        @name_on_card  = info[:name_on_card]                if info[:name_on_card]
+        @number        = info[:number].to_s.gsub(/\s+/, "")
+        @expiration    = info[:expiration].to_s             if info[:expiration]
+        @security_code = info[:security_code].to_s          if info[:security_code]
+        @track2        = info[:track_2]                     if info[:track_2]
+        @last_four     = SwipeExtractor.get_last_four(@number)
+        @valid = true
+      else
+        errors[5000] = "The Credit Card Number supplied in the authorization request appears to be invalid."
+        @valid = false
+      end
     end
 
     def encrypted?
@@ -59,50 +75,41 @@ module VirtualMerchant
       self.swiped
     end
 
-    def extract_card_number(swipe)
-      card_number = swipe[2.. swipe.index('^')-1]
-      card_number = card_number.split(' ').join('')
+    def valid?
+      self.valid
     end
 
-    def extract_expiration(swipe)
-      secondCarrot = swipe.index("^", swipe.index("^")+1)
-      card_expiration_year = swipe[secondCarrot+1..secondCarrot+2]
-      card_expiration_month = swipe[(secondCarrot + 3)..(secondCarrot + 4)]
-      card_expiration = card_expiration_month.to_s + card_expiration_year.to_s
-    end
-
-    def extract_name(swipe)
-      secondCarrot = swipe.index("^", swipe.index("^")+1)
-      if swipe.index('/')
-        first_name_on_card = swipe[swipe.index('/')+1..secondCarrot-1]
-        last_name_on_card = swipe[swipe.index('^')+1..swipe.index('/')-1]
-      else
-        if !swipe.index(" ")
-          first_name_on_card = "Gift"
-          last_name_on_card = "Card"
-        else
-          first_name_on_card = swipe.slice(swipe.index('^') + 1, swipe.index(' '))
-          last_name_on_card = swipe.slice(swipe.index(" ") + 1, secondCarrot)
-        end
+    def check_swipe(swipe_raw)
+      if swipe_raw.index('%') == nil
+        @errors[5012] = "The track data sent appears to be invalid."
+        return false
       end
-      name_on_card = first_name_on_card + " " + last_name_on_card
-    end
-
-    def extract_track_2(swipe)
-      # Magtek reader:  Track 2 starts with a semi-colon and goes to the end
-      # I think that is standard for all readers, but not positive. -LQ
-      track2 = swipe.slice(swipe.index(";"), swipe.length)
-      if track2.index("+")
-        #  Some AMEX have extra stuff at the end of track 2 that causes
-        #virtual merchant to return an INVLD DATA5623 message.
-        #Soooo... let's slice that off
-        track2 = track2.slice(0, track2.index("+"))
+      if swipe_raw.index(';') == nil
+        @errors[5013] = "Transaction requires Track2 data to be sent."
+        return false
       end
-      track2
+      track1 = swipe_raw[1.. swipe_raw.index('?')-1]
+      if track1 == nil || track1 == "E"
+        @errors[5012] = "The track data sent appears to be invalid."
+        return false
+      end
+      track2 = swipe_raw[swipe_raw.index(';')+1.. swipe_raw.length-2]
+      if track2 == nil || track2 == "E"
+        @errors[5013] = "Transaction requires Track2 data to be sent."
+        return false
+      end
+      return true
     end
 
-    def extract_last_four
-      self.number[(self.number.length - 4)..self.number.length]
+    def check_luhn(code)
+      s1 = s2 = 0
+      code.to_s.reverse.chars.each_slice(2) do |odd, even|
+        s1 += odd.to_i
+        double = even.to_i * 2
+        double -= 9 if double >= 10
+        s2 += double
+      end
+      (s1 + s2) % 10 == 0
     end
 
    def blurred_number

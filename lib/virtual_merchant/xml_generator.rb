@@ -93,5 +93,13 @@ module VirtualMerchant
       end
       xml
     end
+
+    def self.error(code, message)
+      xml =  "<txn>
+              <errorCode>#{code}</errorCode>
+              <errorMessage>#{message}</errorMessage>
+              </txn>"
+      xml
+    end
   end
 end
