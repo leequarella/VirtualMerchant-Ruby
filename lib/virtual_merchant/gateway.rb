@@ -6,13 +6,21 @@ class Gateway
   end
 
   def ccsale(card, amount, custom_fields)
-    xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, custom_fields, "ccsale")
-    process(xml, amount)
+    if card.valid?
+      xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, custom_fields, "ccsale")
+      process(xml, amount)
+    else
+      gen_cc_errors(card)
+    end
   end
 
   def ccauth(card, amount, custom_fields)
-    xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, custom_fields, "ccauthonly")
-    process(xml, amount)
+    if card.valid?
+      xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, custom_fields, "ccauthonly")
+      process(xml, amount)
+    else
+      gen_cc_errors(card)
+    end
   end
 
   def cccomplete(amount, transaction_id)
@@ -27,13 +35,21 @@ class Gateway
   end
 
   def ccaddrecurring(card, amount, custom_fields)
-    xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, custom_fields, "ccaddrecurring")
-    process(xml, amount)
+    if card.valid?
+      xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, custom_fields, "ccaddrecurring")
+      process(xml, amount)
+    else
+      gen_cc_errors(card)
+    end
   end
 
   def cccredit(card, amount, custom_fields)
-    xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, custom_fields, 'cccredit')
-    process(xml, amount)
+    if card.valid?
+      xml = VirtualMerchant::XMLGenerator.generate(card, amount, creds, custom_fields, 'cccredit')
+      process(xml, amount)
+    else
+      gen_cc_errors(card)
+    end
   end
 
   def ccvoid(transaction_id)
@@ -56,6 +72,15 @@ class Gateway
       'https://demo.myvirtualmerchant.com/VirtualMerchantDemo/processxml.do'
     else
       'https://www.myvirtualmerchant.com/VirtualMerchant/processxml.do'
+    end
+  end
+
+  def gen_cc_errors(card)
+    card.errors.each do |code, msg|
+      xml = VirtualMerchant::XMLGenerator.error(code, msg)
+      response = VirtualMerchant::Response.new(xml)
+      VirtualMerchant::Logger.log_response(response)
+      response
     end
   end
 end

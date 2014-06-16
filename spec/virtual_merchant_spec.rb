@@ -36,7 +36,7 @@ VirtualMerchant::Logger.off!
 
   invalid_cc = VirtualMerchant::CreditCard.new(
     name_on_card:  "Lee M Cardholder",
-    number:        "1234567890123456",
+    number:        "1234567812345670",
     expiration:    "0513",
     security_code: "1234")
 

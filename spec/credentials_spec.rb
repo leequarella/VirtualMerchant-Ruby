@@ -16,7 +16,7 @@ describe VirtualMerchant::Credentials, "#amount" do
     creds.user_id.should eq("222")
     creds.pin.should eq("abc")
     creds.referer.should eq("https://thisisauri.com")
-    creds.demo.should be_false
+    creds.demo.should eq false
     creds.source.should eq('DERP')
     creds.ksn.should eq(ksn)
     creds.device_type.should eq('003')

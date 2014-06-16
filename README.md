@@ -117,11 +117,11 @@ If a recurring transaction was sucessful and the card was approved, the response
 
 
 Otherwise there was some problem with a transaction, so the response will have these attrs:
-
+(This will also be the response if there was a problem reading the card)
     * approved: false
     * error: errorCode
     * result_message: errorMessage
-    
+
 ### Debugging
 
 There is a logger that will print some info from responses to make debugging a little easier.  It can be turned on with

@@ -10,8 +10,8 @@ describe VirtualMerchant::Response do
   it 'initializes from a happy approval xml string' do
     response = VirtualMerchant::Response.new(approval_xml)
     response.approval_code.should eq "4444"
-    response.approved.should be_true
-    response.cvv2_response.should be_nil
+    response.approved.should eq true
+    response.cvv2_response.should eq nil
     response.blurred_card_number.should eq "50**********3003"
     response.exp_date.should eq "0513"
     response.result_message.should eq "APPROVAL"
@@ -22,14 +22,14 @@ describe VirtualMerchant::Response do
 
   it "initializes from an unhappy approval xml string" do
     response = VirtualMerchant::Response.new(bad_approval_xml)
-    response.approved.should be_false
+    response.approved.should eq false
     response.result_message.should eq "CALL AUTH CENTER"
     response.error.should eq "1"
   end
 
   it "initializes from an error xml string" do
     response = VirtualMerchant::Response.new(error_xml)
-    response.approved.should be_false
+    response.approved.should eq false
     response.result_message.should eq(
       "The Credit Card Number supplied in the authorization request appears to be invalid.")
     response.error.should eq "5000"
@@ -37,7 +37,7 @@ describe VirtualMerchant::Response do
 
   it "initializes from a 'false' param" do
     response = VirtualMerchant::Response.new(false)
-    response.approved.should be_false
+    response.approved.should eq false
     response.result_message.should eq "VirtualMerchant did not respond."
     response.error.should eq "-1"
   end
@@ -51,7 +51,7 @@ describe VirtualMerchant::Response do
     response.next_payment_date.should eq "11/01/2013"
     response.skip_payment.should eq "N"
     response.recurring_batch_count.should eq "54"
-    response.approved.should be_true
+    response.approved.should eq true
     response.blurred_card_number.should eq "50**********3003"
     response.exp_date.should eq "0515"
     response.result_message.should eq "SUCCESS"
