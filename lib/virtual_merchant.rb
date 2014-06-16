@@ -3,10 +3,10 @@ require 'virtual_merchant/amount'
 require 'virtual_merchant/communication'
 require 'virtual_merchant/credentials'
 require 'virtual_merchant/credit_card'
-require 'virtual_merchant/response'
-require 'virtual_merchant/logger'
-require 'virtual_merchant/xml_generator'
 require 'virtual_merchant/gateway'
+require 'virtual_merchant/logger'
+require 'virtual_merchant/response'
+require 'virtual_merchant/xml_generator'
 module VirtualMerchant
   def self.charge(card, amount, creds, custom_fields={}, gateway=Gateway.new(creds))
     gateway.ccsale(card, amount, custom_fields)
