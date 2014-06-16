@@ -5,7 +5,7 @@ data = YAML.load_file "config.yml"
 demo_creds = data['demo_credentials']
 encrypted_card = data['encrypted_card_data']
 
-VirtualMerchant::Logger.on!
+VirtualMerchant::Logger.off!
 
 ##Useful vars ################################################################
   serial  = "2F9CFB042D001600"
