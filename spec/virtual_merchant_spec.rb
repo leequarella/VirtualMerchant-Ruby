@@ -5,7 +5,7 @@ data = YAML.load_file "config.yml"
 demo_creds = data['demo_credentials']
 encrypted_card = data['encrypted_card_data']
 
-VirtualMerchant::Logger.off!
+VirtualMerchant::Logger.on!
 
 ##Useful vars ################################################################
   serial  = "2F9CFB042D001600"
@@ -36,7 +36,7 @@ VirtualMerchant::Logger.off!
 
   invalid_cc = VirtualMerchant::CreditCard.new(
     name_on_card:  "Lee M Cardholder",
-    number:        "1234567890123456",
+    number:        "1234567812345670",
     expiration:    "0513",
     security_code: "1234")
 

@@ -78,7 +78,8 @@ class Gateway
   def gen_cc_errors(card)
     card.errors.each do |code, msg|
       xml = VirtualMerchant::XMLGenerator.error(code, msg)
-      response = VirtualMercahnt::Resoponse.new(xml)
+      response = VirtualMerchant::Response.new(xml)
+      VirtualMerchant::Logger.log_response(response)
       response
     end
   end

@@ -31,7 +31,7 @@ describe VirtualMerchant::Communication, vcr: true do
       it "returns false" do
         bad_url = "junk_url"
         sender = VirtualMerchant::Communication.new({xml: @xml, url: bad_url, http_referer: {}})
-        sender.send.should be_false
+        sender.send.should eq false
       end
     end
   end
