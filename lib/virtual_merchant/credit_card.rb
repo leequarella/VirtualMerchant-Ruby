@@ -1,4 +1,3 @@
-require 'virtual_merchant/swipe_extractor'
 module VirtualMerchant
   class CreditCard
     attr_accessor :name_on_card, :number, :expiration, :security_code, :swipe, :track2,
