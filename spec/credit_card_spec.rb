@@ -49,4 +49,8 @@ describe VirtualMerchant::CreditCard do
     cc.blurred_number.should eq("12**********5670")
     cc.number.should eq("1234567812345670")
   end
+
+  describe "validating" do
+    it "gets errors appended when things ain't right"
+  end
 end

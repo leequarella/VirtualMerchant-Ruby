@@ -19,7 +19,7 @@ module VirtualMerchant
     end
 
     def initialize(info)
-      check_for_errors info
+      check_for_errors(info)
       return unless valid?
       if info[:encrypted]
         from_encrypted(info)
