@@ -6,20 +6,9 @@ module VirtualMerchant
       :encrypted_track_1, :encrypted_track_2, :last_four, :encrypted, :swiped, :valid,
       :errors
 
-    def self.from_swipe(swipe)
-      if swipe.class == Hash && swipe[:encrypted]
-        new(swipe)
-      else
-        new(swipe: swipe)
-      end
-    end
-
-    def self.from_manual(data)
-      new(data)
-    end
-
     def initialize(info)
-      check_for_errors(info)
+      @errors = {}
+      check_for_errors(info) unless info[:encrypted]
       return unless valid?
       if info[:encrypted]
         from_encrypted(info)

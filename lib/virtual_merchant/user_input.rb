@@ -37,7 +37,7 @@ module VirtualMerchant
       end
 
       def validate_track_1 swipe_raw
-        track1 = swipe_raw[1.. swipe_raw.index('?')-1]
+        track1 = swipe_raw[1.. swipe_raw.index('?') - 1]
         if track1 == nil || track1 == "E"
           @errors[5012] = "The track data sent appears to be invalid."
         end

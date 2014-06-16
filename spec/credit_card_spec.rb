@@ -3,7 +3,7 @@ require 'virtual_merchant/credit_card'
 describe VirtualMerchant::CreditCard do
   describe "on manual" do
     it "initializes with valid number" do
-      cc = VirtualMerchant::CreditCard.from_manual(
+      cc = VirtualMerchant::CreditCard.new(
         name_on_card: "Lee Quarella",
         number: "1234567812345670",
         expiration: "0513",
@@ -15,7 +15,7 @@ describe VirtualMerchant::CreditCard do
 
   describe "on swipe" do
     it "initializes from a swipe" do
-      cc = VirtualMerchant::CreditCard.from_swipe(
+      cc = VirtualMerchant::CreditCard.new(swipe:
         "%B5555555555555555^CARDHOLDER/LEE F^5555555555555555555555555555555?;5555555555555555=555555555555555?")
       cc.valid?.should eq true
     end
@@ -32,7 +32,7 @@ describe VirtualMerchant::CreditCard do
           track_2: track_2,
           device_type: "audio",
           last_four:   "1234"}
-        cc = VirtualMerchant::CreditCard.from_swipe(swipe)
+        cc = VirtualMerchant::CreditCard.new(encrypted: swipe)
         cc.encrypted_track_1.should eq(track_1)
         cc.encrypted_track_2.should eq(track_2)
         cc.last_four.should eq('1234')
@@ -40,11 +40,11 @@ describe VirtualMerchant::CreditCard do
   end
 
   it "can blur the card number" do
-    cc = VirtualMerchant::CreditCard.from_manual(
-      name_on_card: "Lee Quarella",
-      number: "1234567812345670",
-      expiration: "0513",
-      track_2: ";5555555555555555=555555555555555?",
+    cc = VirtualMerchant::CreditCard.new(
+      name_on_card:  "Lee Quarella",
+      number:        "1234567812345670",
+      expiration:    "0513",
+      track_2:       ";5555555555555555=555555555555555?",
       security_code: "1234")
     cc.blurred_number.should eq("12**********5670")
     cc.number.should eq("1234567812345670")

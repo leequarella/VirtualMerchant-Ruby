@@ -40,7 +40,7 @@ VirtualMerchant::Logger.off!
     expiration:    "0513",
     security_code: "1234")
 
-  encrypted_cc = VirtualMerchant::CreditCard.from_swipe({
+  encrypted_cc = VirtualMerchant::CreditCard.new({
     encrypted: true,
     track_1: encrypted_card['track_1'],
     track_2: encrypted_card['track_2'],

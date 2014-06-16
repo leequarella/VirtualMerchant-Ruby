@@ -13,7 +13,7 @@ gem "virtual_merchant"
 ###Create Virtual Merchant Objects
 ```ruby
     #Create CreditCard via manual entry
-    cc = VirtualMerchant::CreditCard.from_manual(
+    cc = VirtualMerchant::CreditCard.new(
       name_on_card:  <name_on_card>,
       number:        <card_number>,
       expiration:    <card_exp>,
@@ -21,11 +21,11 @@ gem "virtual_merchant"
 
     # OR
     # via unencrypted MSR
-    cc = VirtualMerchant::CreditCard.from_swipe(<swipe_data>)
+    cc = VirtualMerchant::CreditCard.new(swipe: <swipe_data>)
 
     # OR
     # via encrypted MSR
-    cc = VirtualMerchant::CreditCard.from_swipe(
+    cc = VirtualMerchant::CreditCard.new(
       encrypted: true,
       track_1:   <encrypted_track_1>,
       track_2:   <encrypted_track_2>,
