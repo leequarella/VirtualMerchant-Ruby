@@ -11,27 +11,6 @@ describe VirtualMerchant::CreditCard do
         security_code: "1234")
       cc.valid?.should eq true
     end
-
-    it "is invalid without a number" do
-      cc = VirtualMerchant::CreditCard.from_manual(
-        name_on_card: "Lee Quarella",
-        expiration: "0513",
-        track_2: ";5555555555555555=555555555555555?",
-        security_code: "1234")
-      cc.valid?.should eq false
-      cc.errors.has_key?(5000).should eq true
-    end
-
-    it "is invalid with invalid number" do
-      cc = VirtualMerchant::CreditCard.from_manual(
-        name_on_card: "Lee Quarella",
-        number: "1234567890123456",
-        expiration: "0513",
-        track_2: ";5555555555555555=555555555555555?",
-        security_code: "1234")
-      cc.valid?.should eq false
-      cc.errors.has_key?(5000).should eq true
-    end
   end
 
   describe "on swipe" do
@@ -41,33 +20,6 @@ describe VirtualMerchant::CreditCard do
       cc.valid?.should eq true
     end
 
-    it "is invalid on no track 1" do
-      cc = VirtualMerchant::CreditCard.from_swipe(
-        ";5555555555555555=555555555555555?")
-      cc.valid?.should eq false
-      cc.errors.has_key?(5012).should eq true
-    end
-
-    it "is invalid on no track 2" do
-      cc = VirtualMerchant::CreditCard.from_swipe(
-        "%B5555555555555555^CARDHOLDER/LEE F^5555555555555555555555555555555?")
-      cc.valid?.should eq false
-      cc.errors.has_key?(5013).should eq true
-    end
-
-    it "is invalid on track 1 read error" do
-      cc = VirtualMerchant::CreditCard.from_swipe(
-        "%E?;5555555555555555=555555555555555?")
-      cc.valid?.should eq false
-      cc.errors.has_key?(5012).should eq true
-    end
-
-    it "is invalid on track 2 read error" do
-      cc = VirtualMerchant::CreditCard.from_swipe(
-        "%B5555555555555555^CARDHOLDER/LEE F^5555555555555555555555555555555?;E?")
-      cc.valid?.should eq false
-      cc.errors.has_key?(5013).should eq true
-    end
   end
 
   describe "on encrypted" do
