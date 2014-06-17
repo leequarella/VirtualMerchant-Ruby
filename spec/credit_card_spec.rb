@@ -50,6 +50,17 @@ describe VirtualMerchant::CreditCard do
     cc.number.should eq("1234567812345670")
   end
 
+  it "sends *'s for blur of invalid card" do
+    cc = VirtualMerchant::CreditCard.new(
+      name_on_card:  "Lee Quarella",
+      number:        "1234567812",
+      expiration:    "0513",
+      track_2:       ";5555555555555555=555555555555555?",
+      security_code: "1234")
+    cc.blurred_number.should eq("****************")
+    cc.number.should eq(nil)
+  end
+
   describe "validating" do
     it "gets errors appended when things ain't right" do
       info = {
