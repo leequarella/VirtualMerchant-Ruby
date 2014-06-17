@@ -11,6 +11,7 @@ gem "virtual_merchant"
 
 ## Usage
 ###Create Virtual Merchant Objects
+####Credit Card Objects
 ```ruby
     #Create CreditCard via manual entry
     cc = VirtualMerchant::CreditCard.new(
@@ -30,7 +31,24 @@ gem "virtual_merchant"
       track_1:   <encrypted_track_1>,
       track_2:   <encrypted_track_2>,
       last_four: <last_four>
+```
+Public Methods:
+```ruby
+    encrypted?
+      self.encrypted
+    
+    swiped?
+      self.swiped
+    
+    valid?
+      self.errors.count == 0
+    
+    blurred_number
+      "1234123412341234" -> "12**********1234"
+```
 
+####Amount Objects
+```ruby
     amount = VirtualMerchant::Amount.new(
       total:             <total amount to charge>,
       tax:               <amount of tax included in the total>, #optional
@@ -38,7 +56,10 @@ gem "virtual_merchant"
       billing_cycle:     <'WEEKLY/MONTHLY'>, #required for recurring payments
       end_of_month:      <'Y/N'>) #required for recurring payments occuring on
                                   #last day of month
+```
 
+####Credentials Objects
+```ruby
     creds = VirtualMerchant::Credentials.new(
       account_id:     <vm_account_id>,
       user_id:        <vm_user_id>,
@@ -118,6 +139,7 @@ If a recurring transaction was sucessful and the card was approved, the response
 
 Otherwise there was some problem with a transaction, so the response will have these attrs:
 (This will also be the response if there was a problem reading the card)
+
     * approved: false
     * error: errorCode
     * result_message: errorMessage
