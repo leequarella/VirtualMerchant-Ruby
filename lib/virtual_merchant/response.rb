@@ -8,7 +8,16 @@ module VirtualMerchant
 
     alias_method :approved?, :approved
 
-    def initialize(xml_string)
+    def initialize(data)
+      if data[:type] == :invalid_credit_card
+        bad_card_error(data[:errors])
+      else
+        read_xml(data[:xml_string])
+      end
+    end
+
+    private
+    def read_xml(xml_string)
       if xml_string == false
         error_response("-1", "VirtualMerchant did not respond.")
       else
@@ -16,8 +25,6 @@ module VirtualMerchant
       end
     end
 
-
-    private
     def decode_xml(xml_string)
       doc = REXML::Document.new(xml_string)
       REXML::XPath.each(doc, "txn") do |xml|
@@ -35,6 +42,12 @@ module VirtualMerchant
           approval(xml)
         end
       end
+    end
+
+    def bad_card_error(errors)
+      @approved       = false
+      @result_message = errors.first[1]
+      @error          = errors.first[0]
     end
 
     def error_response(code, message)
