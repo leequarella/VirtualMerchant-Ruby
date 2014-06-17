@@ -8,7 +8,7 @@ approval_recurring_response_xml = File.read("spec/support/approval_recurring_res
 
 describe VirtualMerchant::Response do
   it 'initializes from a happy approval xml string' do
-    response = VirtualMerchant::Response.new(approval_xml)
+    response = VirtualMerchant::Response.new(xml_string: approval_xml)
     response.approval_code.should eq "4444"
     response.approved.should eq true
     response.cvv2_response.should eq nil
@@ -21,14 +21,14 @@ describe VirtualMerchant::Response do
   end
 
   it "initializes from an unhappy approval xml string" do
-    response = VirtualMerchant::Response.new(bad_approval_xml)
+    response = VirtualMerchant::Response.new(xml_string: bad_approval_xml)
     response.approved.should eq false
     response.result_message.should eq "CALL AUTH CENTER"
     response.error.should eq "1"
   end
 
   it "initializes from an error xml string" do
-    response = VirtualMerchant::Response.new(error_xml)
+    response = VirtualMerchant::Response.new(xml_string: error_xml)
     response.approved.should eq false
     response.result_message.should eq(
       "The Credit Card Number supplied in the authorization request appears to be invalid.")
@@ -36,14 +36,14 @@ describe VirtualMerchant::Response do
   end
 
   it "initializes from a 'false' param" do
-    response = VirtualMerchant::Response.new(false)
+    response = VirtualMerchant::Response.new(xml_string: false)
     response.approved.should eq false
     response.result_message.should eq "VirtualMerchant did not respond."
     response.error.should eq "-1"
   end
 
   it 'initializes from a happy recurring approval xml string' do
-    response = VirtualMerchant::Response.new(approval_recurring_response_xml)
+    response = VirtualMerchant::Response.new(xml_string: approval_recurring_response_xml)
     response.billing_cycle.should eq "WEEKLY"
     response.start_payment_date.should eq "11/01/2013"
     response.transaction_type.should eq "CCADDRECURRING"
@@ -55,5 +55,11 @@ describe VirtualMerchant::Response do
     response.blurred_card_number.should eq "50**********3003"
     response.exp_date.should eq "0515"
     response.result_message.should eq "SUCCESS"
+  end
+
+  it "initializes from a bad card read" do
+    response = VirtualMerchant::Response.new(type: :invalid_credit_card, errors: {9999 => "CARD ERROR TEST"})
+    expect(response.error).to eq 9999
+    expect(response.result_message).to eq "CARD ERROR TEST"
   end
 end

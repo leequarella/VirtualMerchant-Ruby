@@ -37,7 +37,6 @@ describe VirtualMerchant::UserInput do
     it "reports an error if track 2 is missing" do
       user_input = VirtualMerchant::UserInput.new(swipe:
         "%B5555555555555555^CARDHOLDER/LEE F^5555555555555555555555555555555?")
-      puts user_input.errors
       user_input.errors.has_key?(5013).should eq true
     end
 

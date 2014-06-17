@@ -20,10 +20,6 @@ module VirtualMerchant
       end
     end
 
-    def check_for_errors info
-      @errors = VirtualMerchant::UserInput.new(info).errors
-    end
-
     def encrypted?
       self.encrypted
     end
@@ -33,7 +29,7 @@ module VirtualMerchant
     end
 
     def valid?
-      errors.count == 0
+      self.errors.count == 0
     end
 
     def blurred_number
@@ -54,6 +50,10 @@ module VirtualMerchant
     end
 
     private
+      def check_for_errors info
+        @errors = VirtualMerchant::UserInput.new(info).errors
+      end
+
       def from_encrypted (info)
         @encrypted         = true
         @encrypted_track_1 = info[:track_1]

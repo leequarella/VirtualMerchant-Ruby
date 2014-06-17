@@ -61,7 +61,7 @@ class Gateway
     communication = VirtualMerchant::Communication.new(
       {xml: xml, url: url(creds.demo), referer: creds.referer})
     vm_response = communication.send
-    response = VirtualMerchant::Response.new(vm_response)
+    response = VirtualMerchant::Response.new(xml_string: vm_response)
     VirtualMerchant::Logger.log_response(response)
     response
   end
@@ -76,11 +76,6 @@ class Gateway
   end
 
   def gen_cc_errors(card)
-    card.errors.each do |code, msg|
-      xml = VirtualMerchant::XMLGenerator.error(code, msg)
-      response = VirtualMerchant::Response.new(xml)
-      VirtualMerchant::Logger.log_response(response)
-      response
-    end
+    response = VirtualMerchant::Response.new(type: :invalid_credit_card, errors: card.errors)
   end
 end

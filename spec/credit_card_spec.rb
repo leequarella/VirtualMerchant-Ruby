@@ -51,6 +51,16 @@ describe VirtualMerchant::CreditCard do
   end
 
   describe "validating" do
-    it "gets errors appended when things ain't right"
+    it "gets errors appended when things ain't right" do
+      info = {
+        name_on_card:  "Lee Quarella",
+        number:        "1234",
+        expiration:    "0513",
+        track_2:       ";5555555555555555=555555555555555?",
+        security_code: "1234"}
+      expect(VirtualMerchant::UserInput).to receive(:new).with(info)
+        .and_return(double('input', {errors: {5000 => "no card"}}))
+      VirtualMerchant::CreditCard.new(info)
+    end
   end
 end
