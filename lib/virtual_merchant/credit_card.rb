@@ -33,6 +33,9 @@ module VirtualMerchant
     end
 
     def blurred_number
+      if !self.valid?
+        return "****************"
+      end
       begin
         number = self.number.to_s
         leng = number.length
