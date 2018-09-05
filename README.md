@@ -47,7 +47,7 @@ Public Methods:
       "1234123412341234" -> "12**********1234"
 ```
 
-####Amount Objects
+#### Amount Objects
 ```ruby
     amount = VirtualMerchant::Amount.new(
       total:             <total amount to charge>,
@@ -58,7 +58,7 @@ Public Methods:
                                   #last day of month
 ```
 
-####Credentials Objects
+#### Credentials Objects
 ```ruby
     creds = VirtualMerchant::Credentials.new(
       account_id:     <vm_account_id>,
@@ -73,7 +73,7 @@ Public Methods:
       referer:        <uri of the http referer>, #optional)
 ```
 
-###Charge, Authorize, Refund, or Void
+### Charge, Authorize, Refund, or Void
 ```ruby
     #Charge
     response = VirtualMerchant.charge(cc, amount, creds)
@@ -90,7 +90,7 @@ Public Methods:
     #Void
     response = VirtualMerchant.void(transaction_id, creds)
 ```
-###Complete and Delete Authorized Transactions
+### Complete and Delete Authorized Transactions
 Complete is used to convert an existing authorized transaction to a sale
 without a second authorization.
 
@@ -105,7 +105,7 @@ WARNING: Transactions deleted from the batch cannot be recovered.
     response = VirtualMerchant.delete(creds, transaction_id)
 ```
 
-###Response
+### Response
 
 The response returned is a VirtualMerchant::Response object.
 
@@ -153,7 +153,7 @@ There is a logger that will print some info from responses to make debugging a l
 ```
 
 
-###Testing
+### Testing
 
 For testing, edit the config.yml file to include your virtual merchant account credentials and encrypted card data.
 
