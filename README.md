@@ -10,7 +10,9 @@ gem "virtual_merchant"
 
 
 ## Usage
+
 ###Create Virtual Merchant Objects
+
 ####Credit Card Objects
 ```ruby
     #Create CreditCard via manual entry
